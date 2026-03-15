@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Steady Clinician — Prof. Dr. Boon-How Chew</title>
+<meta name="description" content="AI-Steady Clinician: the second in a three-part series. From clinical problem identification to deployment — the full AI tool development lifecycle for clinicians.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:       #185FA5;
+  --blue-dark:  #0C447C;
+  --blue-light: #E6F1FB;
+  --blue-pale:  #F0F6FD;
+  --green:      #3B6D11;
+  --green-mid:  #639922;
+  --green-light:#EAF3DE;
+  --amber:      #BA7517;
+  --amber-dark: #854F0B;
+  --amber-light:#FAEEDA;
+  --coral:      #D85A30;
+  --coral-dark: #993C1D;
+  --coral-light:#FAECE7;
+  --purple:     #7F77DD;
+  --purple-dark:#534AB7;
+  --purple-light:#EEEDFE;
+  --teal:       #1D9E75;
+  --teal-dark:  #0F6E56;
+  --teal-light: #E1F5EE;
+  --ink:        #1A1A18;
+  --ink-2:      #3D3D3A;
+  --ink-3:      #6B6B67;
+  --ink-4:      #9C9A92;
+  --surface:    #F8F9FA;
+  --surface-2:  #F1F0EB;
+  --border:     rgba(26,26,24,0.11);
+  --font-serif: 'DM Serif Display', Georgia, serif;
+  --font-sans:  'DM Sans', system-ui, sans-serif;
+  --r:          10px;
+  --r-lg:       16px;
+  --max:        740px;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font-sans);background:var(--surface);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:var(--blue-dark);text-decoration:underline;text-underline-offset:3px}
+a:hover{color:var(--blue)}
+
+/* LAYOUT */
+.wrap{max-width:var(--max);margin:0 auto;padding:0 1.25rem}
+section{padding:2.75rem 0}
+section+section{border-top:1px solid var(--border)}
+
+/* PROGRESS BAR */
+#progress-bar{position:fixed;top:0;left:0;height:2px;background:var(--blue);width:0%;z-index:200;transition:width .1s linear}
+
+/* NAV */
+#topnav{position:sticky;top:0;z-index:100;background:rgba(248,249,250,0.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0.75rem 1.25rem}
+.nav-inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.nav-brand{font-family:var(--font-serif);font-size:0.95rem;color:var(--ink);text-decoration:none;white-space:nowrap}
+.nav-brand span{color:var(--blue-dark)}
+.nav-links{display:flex;gap:0.2rem;flex-wrap:wrap}
+.nav-links a{font-size:0.72rem;font-weight:500;letter-spacing:0.02em;color:var(--ink-3);text-decoration:none;padding:0.28rem 0.55rem;border-radius:6px;transition:background .15s,color .15s}
+.nav-links a:hover,.nav-links a.active{background:var(--blue-light);color:var(--blue-dark)}
+
+/* SERIES BADGE */
+.series-bar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:1rem}
+.sp{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+.s-done{background:var(--teal-light);color:var(--teal-dark)}
+.s-this{background:var(--blue-dark);color:#fff}
+.s-next{background:var(--surface-2);color:var(--ink-4);border:0.5px solid var(--border)}
+.s-arr{font-size:11px;color:var(--ink-4)}
+
+/* HERO */
+#hero{padding:3.5rem 0 2.75rem;background:linear-gradient(155deg,var(--blue-dark) 0%,#0a3560 100%);border-bottom:none}
+.hero-kicker{font-size:0.68rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#85B7EB;margin-bottom:1rem}
+.hero-title{font-family:var(--font-serif);font-size:clamp(1.9rem,5.5vw,2.8rem);line-height:1.15;color:#fff;margin-bottom:1.1rem}
+.hero-title em{font-style:italic;color:#85B7EB}
+.hero-sub{font-size:0.9rem;color:rgba(255,255,255,0.78);max-width:530px;margin-bottom:1.75rem;line-height:1.75}
+.hero-meta{display:flex;flex-wrap:wrap;gap:0.65rem}
+.hero-pill{font-size:0.72rem;font-weight:500;background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.22);padding:0.3rem 0.85rem;border-radius:20px}
+.hero-author{margin-top:2.25rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,0.18);font-size:0.78rem;color:rgba(255,255,255,0.55)}
+.hero-author strong{color:#fff;font-weight:500}
+
+/* SESSION THUMBNAILS */
+.sessions-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.65rem;margin:1.5rem 0}
+.sthumb{border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--border);text-decoration:none;display:block;transition:transform .18s,box-shadow .18s}
+.sthumb:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.1)}
+.sthumb-head{padding:0.9rem 1rem 0.7rem}
+.sthumb-num{font-size:0.68rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;opacity:0.75;margin-bottom:0.3rem}
+.sthumb-title{font-family:var(--font-serif);font-size:0.95rem;line-height:1.3;color:#fff}
+.sthumb-foot{padding:0.55rem 1rem;background:rgba(0,0,0,0.15);font-size:0.7rem;color:rgba(255,255,255,0.72)}
+.c-s1{background:var(--blue-dark)}
+.c-s2{background:var(--green)}
+.c-s3{background:var(--amber-dark)}
+.c-s4{background:var(--purple-dark)}
+
+/* SECTION HEADERS */
+.sess-eyebrow{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.45rem}
+.sess-title{font-family:var(--font-serif);font-size:clamp(1.4rem,3.5vw,1.9rem);line-height:1.2;margin-bottom:0.65rem}
+.sess-desc{font-size:0.875rem;color:var(--ink-3);max-width:550px}
+.sess-meta{display:flex;gap:0.45rem;flex-wrap:wrap;margin-top:0.875rem}
+.tag{font-size:0.68rem;font-weight:500;padding:0.22rem 0.65rem;border-radius:20px;border:1px solid currentColor}
+
+/* CONTENT */
+.prose{font-size:0.875rem;color:var(--ink-2)}
+.prose p{margin-bottom:0.875rem}
+.prose p:last-child{margin-bottom:0}
+.prose strong{color:var(--ink);font-weight:600}
+
+.callout{border-radius:var(--r);padding:0.9rem 1.05rem;margin:1.1rem 0;font-size:0.85rem}
+.callout-blue{background:var(--blue-light);border-left:3px solid var(--blue);color:var(--blue-dark)}
+.callout-green{background:var(--green-light);border-left:3px solid var(--green-mid);color:var(--green)}
+.callout-amber{background:var(--amber-light);border-left:3px solid var(--amber);color:var(--amber-dark)}
+.callout-coral{background:var(--coral-light);border-left:3px solid var(--coral);color:var(--coral-dark)}
+.callout-purple{background:var(--purple-light);border-left:3px solid var(--purple);color:var(--purple-dark)}
+.callout-title{font-weight:600;margin-bottom:0.25rem;font-size:0.78rem;letter-spacing:0.03em}
+
+.card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:1rem 1.2rem;margin-bottom:0.7rem}
+.card-title{font-weight:600;font-size:0.875rem;margin-bottom:0.35rem;color:var(--ink)}
+.card-body{font-size:0.83rem;color:var(--ink-3);line-height:1.65}
+
+h3.blk{font-family:var(--font-sans);font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-4);margin:1.6rem 0 0.7rem}
+
+.list-clean{list-style:none;padding:0}
+.list-clean li{font-size:0.85rem;color:var(--ink-2);padding:0.4rem 0 0.4rem 1.2rem;position:relative;border-bottom:1px solid var(--border)}
+.list-clean li:last-child{border-bottom:none}
+.list-clean li::before{content:'';position:absolute;left:0;top:0.82rem;width:6px;height:6px;border-radius:50%}
+.l-blue li::before{background:var(--blue)}
+.l-green li::before{background:var(--green-mid)}
+.l-amber li::before{background:var(--amber)}
+.l-coral li::before{background:var(--coral)}
+.l-purple li::before{background:var(--purple)}
+
+/* 9-STEP CYCLE — interactive */
+.cycle-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:1rem 0}
+@media(max-width:480px){.cycle-grid{grid-template-columns:repeat(2,1fr)}}
+.step-btn{border:1.5px solid var(--border);border-radius:var(--r);padding:0.65rem 0.7rem;cursor:pointer;background:var(--surface);transition:all .15s;text-align:left}
+.step-btn:hover{border-color:var(--blue);background:var(--blue-pale)}
+.step-btn.active{border-color:var(--blue);background:var(--blue-light)}
+.step-num{font-size:0.65rem;font-weight:700;color:var(--blue-dark);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:2px}
+.step-name{font-size:0.78rem;font-weight:500;color:var(--ink);line-height:1.35}
+.step-detail{display:none;background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.1rem;margin-top:0.5rem}
+.step-detail.open{display:block}
+.step-detail-title{font-size:0.875rem;font-weight:600;color:var(--blue-dark);margin-bottom:0.5rem}
+.step-detail-body{font-size:0.83rem;color:var(--ink-2);line-height:1.7}
+.step-detail-body ul{margin:0.5rem 0 0 1rem;font-size:0.83rem;color:var(--ink-2)}
+.step-detail-body li{margin-bottom:0.25rem}
+.clinician-tag{display:inline-block;font-size:0.7rem;font-weight:600;padding:2px 8px;border-radius:4px;background:var(--blue-light);color:var(--blue-dark);margin-top:0.6rem}
+
+/* QUIZ */
+.quiz-block{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin:1.6rem 0}
+.quiz-header{background:var(--surface-2);padding:0.7rem 1rem;display:flex;align-items:center;gap:0.5rem}
+.quiz-badge{font-size:0.63rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;background:var(--blue-dark);color:#fff;padding:0.2rem 0.55rem;border-radius:4px}
+.quiz-title-text{font-size:0.78rem;font-weight:500;color:var(--ink-2)}
+.quiz-body{padding:1.05rem}
+.quiz-q{font-size:0.875rem;font-weight:500;color:var(--ink);margin-bottom:0.85rem;line-height:1.55}
+.quiz-options{display:flex;flex-direction:column;gap:0.4rem}
+.quiz-opt{display:flex;align-items:flex-start;gap:0.6rem;padding:0.6rem 0.8rem;border-radius:var(--r);border:1.5px solid var(--border);cursor:pointer;font-size:0.83rem;color:var(--ink-2);line-height:1.5;transition:border-color .15s,background .15s;background:var(--surface);user-select:none}
+.quiz-opt:hover{border-color:var(--blue);background:var(--blue-pale)}
+.quiz-opt.correct{border-color:var(--teal);background:var(--teal-light);color:var(--teal-dark)}
+.quiz-opt.incorrect{border-color:var(--coral);background:var(--coral-light);color:var(--coral-dark)}
+.quiz-opt.disabled{cursor:default;pointer-events:none}
+.quiz-opt.dimmed{opacity:0.4}
+.opt-icon{width:17px;height:17px;border-radius:50%;border:1.5px solid currentColor;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700}
+.quiz-feedback{margin-top:0.85rem;padding:0.7rem 0.875rem;border-radius:var(--r);font-size:0.81rem;line-height:1.6;display:none}
+.quiz-feedback.show{display:block}
+.fb-correct{background:var(--teal-light);color:var(--teal-dark)}
+.fb-incorrect{background:var(--coral-light);color:var(--coral-dark)}
+.fb-label{font-weight:700;margin-bottom:0.2rem;font-size:0.72rem;letter-spacing:0.04em;text-transform:uppercase}
+.quiz-reset{margin-top:0.55rem;font-size:0.75rem;color:var(--ink-4);cursor:pointer;text-decoration:underline;display:none}
+.quiz-reset:hover{color:var(--blue-dark)}
+
+/* GLOSSARY */
+.glossary-search{width:100%;padding:0.65rem 0.9rem;border:1.5px solid var(--border);border-radius:var(--r);font-size:0.875rem;font-family:var(--font-sans);background:#fff;color:var(--ink);margin-bottom:1rem;transition:border-color .15s}
+.glossary-search:focus{outline:none;border-color:var(--blue)}
+.glossary-filter{display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:1.1rem}
+.gfil{font-size:0.7rem;font-weight:500;padding:0.22rem 0.7rem;border-radius:20px;border:1px solid var(--border);cursor:pointer;background:var(--surface);color:var(--ink-3);transition:all .15s}
+.gfil:hover,.gfil.on{background:var(--blue-dark);color:#fff;border-color:var(--blue-dark)}
+.gterm{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:0.75rem 0.9rem;margin-bottom:0.5rem}
+.gterm-head{display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;cursor:pointer}
+.gterm-name{font-size:0.875rem;font-weight:600;color:var(--ink)}
+.gterm-badge{font-size:0.62rem;font-weight:600;padding:1px 7px;border-radius:4px;flex-shrink:0;margin-top:2px}
+.gterm-body{font-size:0.82rem;color:var(--ink-2);line-height:1.65;margin-top:0.5rem;display:none}
+.gterm-body.open{display:block}
+.gterm-example{font-size:0.78rem;color:var(--ink-3);font-style:italic;margin-top:0.35rem;padding-top:0.35rem;border-top:0.5px solid var(--border)}
+.hidden-term{display:none}
+
+/* VIDEO EMBED */
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:var(--r-lg);margin:1rem 0}
+.video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%}
+
+/* READING CARD */
+.reading-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:0.9rem 1rem;margin-bottom:0.6rem;display:flex;gap:0.85rem;align-items:flex-start}
+.ricon{width:32px;height:32px;border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:700}
+.ri-blue{background:var(--blue-light);color:var(--blue-dark)}
+.ri-green{background:var(--green-light);color:var(--green)}
+.ri-amber{background:var(--amber-light);color:var(--amber-dark)}
+.ri-purple{background:var(--purple-light);color:var(--purple-dark)}
+.ri-coral{background:var(--coral-light);color:var(--coral-dark)}
+.ri-gray{background:var(--surface-2);color:var(--ink-3)}
+.rbody{flex:1;min-width:0}
+.rjournal{font-size:0.65rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-4);margin-bottom:0.18rem}
+.rtitle{font-size:0.83rem;font-weight:500;color:var(--ink);line-height:1.4;margin-bottom:0.28rem}
+.rnote{font-size:0.76rem;color:var(--ink-3);line-height:1.5;margin-bottom:0.35rem}
+.rlink{font-size:0.72rem;font-weight:500;color:var(--blue-dark);text-decoration:none;border-bottom:1px solid var(--blue-light);transition:border-color .15s}
+.rlink:hover{border-color:var(--blue)}
+
+.divider{height:1px;background:var(--border);margin:1.4rem 0}
+
+/* BACK TO TOP */
+#btt{position:fixed;bottom:1.2rem;right:1.2rem;width:36px;height:36px;border-radius:50%;background:var(--blue-dark);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.85rem;cursor:pointer;opacity:0;transition:opacity .2s;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+#btt.show{opacity:1}
+
+/* FOOTER */
+#footer{background:var(--ink);color:rgba(255,255,255,0.5);padding:2.25rem 1.25rem;font-size:0.78rem;text-align:center;line-height:1.8}
+#footer strong{color:#fff;font-weight:500}
+#footer a{color:rgba(255,255,255,0.65)}
+
+@media(max-width:480px){
+  .nav-links a{font-size:0.68rem;padding:0.22rem 0.42rem}
+  section{padding:2rem 0}
+  .hero-title{font-size:1.7rem}
+}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav id="topnav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="#hero">AI-Steady <span>Clinician</span></a>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#session1">S1</a>
+      <a href="#session2">S2</a>
+      <a href="#session3">S3</a>
+      <a href="#session4">S4</a>
+      <a href="#glossary">Glossary</a>
+      <a href="#resources">Resources</a>
+      <a href="#mystory">About</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero" style="border-top:none;">
+  <div class="wrap">
+    <div class="series-bar">
+      <a href="https://boonhowchew.github.io/ai-ready-clinician/" target="_blank" rel="noopener" class="sp s-done" style="text-decoration:none;">AI-Ready Clinician ✓</a>
+      <span class="s-arr">→</span>
+      <span class="sp s-this">AI-Steady Clinician</span>
+      <span class="s-arr">→</span>
+      <span class="sp s-next">AI-Savvy Clinician</span>
+    </div>
+    <p class="hero-kicker">A clinician-led learning programme · second in a three-part series</p>
+    <h1 class="hero-title">AI-Steady<br><em>Clinician</em></h1>
+    <p class="hero-sub">From clinical problem identification to deployment and monitoring — the full 9-step AI development lifecycle, explained for clinicians who want to co-design, evaluate, and advocate. No coding required.</p>
+    <div class="hero-meta">
+      <span class="hero-pill">4 sessions · ~5 hrs total</span>
+      <span class="hero-pill">AI-familiar clinicians</span>
+      <span class="hero-pill">Based on BMC Medicine 2025</span>
+      <span class="hero-pill">65-term interactive glossary</span>
+    </div>
+    <div class="hero-author">
+      Designed and facilitated by <strong>Prof. Dr. Boon-How Chew</strong><br>
+      Professor of Family Medicine, UPM &nbsp;·&nbsp; Senior Consultant Family Medicine Specialist, HSAAS
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="wrap">
+    <h3 class="blk">Why this programme?</h3>
+    <div class="prose">
+      <p>Digital medicine and smart healthcare will not be realised without the <strong>cognizant participation of clinicians</strong> in the entire development process and cycle. Clinicians educated in these aspects provide invaluable insights during the design stage of AI-enabled tools — ensuring solutions meet clinical needs, emphasise patient safety, and integrate into clinical workflows.</p>
+      <p>This programme is built on a peer-reviewed integrative review (Chew &amp; Ngiam, BMC Medicine 2025) and the supplementary materials that accompany it. It is the second in a three-part series: after <a href="https://boonhowchew.github.io/ai-ready-clinician/" target="_blank" rel="noopener">AI-Ready Clinician</a>, and before AI-Savvy Clinician.</p>
+    </div>
+
+    <div class="callout callout-blue">
+      <div class="callout-title">Key message from the source paper</div>
+      The AI healthcare market was valued at USD 20.9 billion in 2024 and is growing at 48.1% annually. 79% of healthcare organisations are already using AI. ROI is realised within 14 months, generating USD 3.20 for every USD 1 invested. The question is not whether AI will touch your practice — it already has.
+    </div>
+
+    <div class="sessions-grid">
+      <a class="sthumb c-s1" href="#session1">
+        <div class="sthumb-head">
+          <div class="sthumb-num" style="color:#B5D4F4;">Session 1</div>
+          <div class="sthumb-title">Why AI? Problems,<br>teams &amp; levels</div>
+        </div>
+        <div class="sthumb-foot">75 min · Discussion-led</div>
+      </a>
+      <a class="sthumb c-s2" href="#session2">
+        <div class="sthumb-head">
+          <div class="sthumb-num" style="color:#C0DD97;">Session 2</div>
+          <div class="sthumb-title">Data, infrastructure<br>&amp; building the model</div>
+        </div>
+        <div class="sthumb-foot">75 min · Concept + case</div>
+      </a>
+      <a class="sthumb c-s3" href="#session3">
+        <div class="sthumb-head">
+          <div class="sthumb-num" style="color:#FAC775;">Session 3</div>
+          <div class="sthumb-title">Validating &amp;<br>registering a tool</div>
+        </div>
+        <div class="sthumb-foot">75 min · Framework-focused</div>
+      </a>
+      <a class="sthumb c-s4" href="#session4">
+        <div class="sthumb-head">
+          <div class="sthumb-num" style="color:#CECBF6;">Session 4</div>
+          <div class="sthumb-title">Deployment, monitoring<br>&amp; the AI ecosystem</div>
+        </div>
+        <div class="sthumb-foot">75 min · Governance capstone</div>
+      </a>
+    </div>
+
+    <h3 class="blk">The 9-step AI development cycle</h3>
+    <p style="font-size:0.85rem;color:var(--ink-3);margin-bottom:1rem;">Tap any step to see what it means for clinicians. Each session covers the highlighted steps.</p>
+
+    <div class="cycle-grid" id="cycle-grid">
+      <div class="step-btn" onclick="toggleStep(this,'step1')">
+        <div class="step-num">Step 1</div>
+        <div class="step-name">Clinical problem identification</div>
+      </div>
+      <div class="step-btn" onclick="toggleStep(this,'step2')">
+        <div class="step-num">Step 2</div>
+        <div class="step-name">Form team or collaborate</div>
+      </div>
+      <div class="step-btn" onclick="toggleStep(this,'step3')">
+        <div class="step-num">Step 3</div>
+        <div class="step-name">Data organisation &amp; curation</div>
+      </div>
+      <div class="step-btn" onclick="toggleStep(this,'step4')">
+        <div class="step-num">Step 4</div>
+        <div class="step-name">Infrastructure &amp; architecture</div>
+      </div>
+      <div class="step-btn" onclick="toggleStep(this,'step5')">
+        <div class="step-num">Step 5</div>
+        <div class="step-name">Explore AI neural networks</div>
+      </div>
+      <div class="step-btn" onclick="toggleStep(this,'step6')">
+        <div class="step-num">Step 6</div>
+        <div class="step-name">Validate AI/ML models</div>
+      </div>
+      <div class="step-btn" onclick="toggleStep(this,'step7')">
+        <div class="step-num">Step 7</div>
+        <div class="step-name">Registration</div>
+      </div>
+      <div class="step-btn" onclick="toggleStep(this,'step8')">
+        <div class="step-num">Step 8</div>
+        <div class="step-name">Deployment &amp; monitoring</div>
+      </div>
+      <div class="step-btn" onclick="toggleStep(this,'step9')">
+        <div class="step-num">Step 9</div>
+        <div class="step-name">Improve the AI ecosystem</div>
+      </div>
+    </div>
+
+    <div id="step1" class="step-detail">
+      <div class="step-detail-title">Step 1 — Clinical problem identification</div>
+      <div class="step-detail-body">Real and solvable clinical problems with availability of data. Deciding the level (general use, fine-tuned, or new model) and the type of algorithm needed.
+        <ul><li>Is this a descriptive, diagnostic, predictive, or prescriptive problem?</li><li>Is the problem about signs (vision), symptoms (NLP), or actions (robotics)?</li><li>Could a simpler rule-based system solve it instead?</li></ul>
+        <span class="clinician-tag">Clinician as problem-owner</span>
+      </div>
+    </div>
+    <div id="step2" class="step-detail">
+      <div class="step-detail-title">Step 2 — Form team or collaborate</div>
+      <div class="step-detail-body">Consisting of people with the necessary skill sets: data scientists, data engineers, data architects, chief data officer, health informatics experts, clinicians, health administrators, and patient groups.
+        <ul><li>The ideal team for a new model from scratch includes 12 distinct roles — from ML engineer to QA tester to clinical champion.</li><li>The clinician's irreplaceable role: domain expert, problem definer, data annotator, and real-world validator.</li></ul>
+        <span class="clinician-tag">Clinician as domain expert</span>
+      </div>
+    </div>
+    <div id="step3" class="step-detail">
+      <div class="step-detail-title">Step 3 — Data organisation &amp; curation</div>
+      <div class="step-detail-body">The right and quality data to be explored, annotated, and pre-processed: standardisation for interoperability, cataloguing, and de-identification.
+        <ul><li>Clinicians are the only people who can judge whether a label is clinically meaningful.</li><li>Data without infrastructure = generic AI. Data with curated, rich, interoperable metadata = personalised AI.</li></ul>
+        <span class="clinician-tag">Clinician as data guardian</span>
+      </div>
+    </div>
+    <div id="step4" class="step-detail">
+      <div class="step-detail-title">Step 4 — Infrastructure &amp; architecture</div>
+      <div class="step-detail-body">Capacity of computers and servers necessary to operate huge amounts of data at optimal speed. Cloud vs on-premise vs federated learning.
+        <ul><li>The AI system pipeline runs in three stages: input (data feeds, APIs), processing (model execution, MLOps), output (chatbots, dashboards, tracking tools).</li><li>Clinicians need to ask: where does patient data go? Who can access it? What happens if the system fails?</li></ul>
+        <span class="clinician-tag">Clinician as infrastructure questioner</span>
+      </div>
+    </div>
+    <div id="step5" class="step-detail">
+      <div class="step-detail-title">Step 5 — Explore AI neural networks</div>
+      <div class="step-detail-body">Find tested AI algorithms available on open access platforms — or create anew. Three levels of AI technology usage: general use (zero-shot prompting), fine-tuned model (adapting to a task), and new model from scratch.
+        <ul><li>Creating a new LLM from scratch requires hundreds of high-end GPUs running for weeks — extremely expensive.</li><li>Most clinical use cases are better served by fine-tuning or RAG (Retrieval-Augmented Generation).</li></ul>
+        <span class="clinician-tag">Clinician as intelligent commissioner</span>
+      </div>
+    </div>
+    <div id="step6" class="step-detail">
+      <div class="step-detail-title">Step 6 — Validate AI/ML models</div>
+      <div class="step-detail-body">Proper clinical or non-clinical validation, clinical trials or equivalent to estimate effect in the real-world settings.
+        <ul><li>Key metrics: sensitivity, specificity, AUC, PPV, NPV, F1 score, calibration.</li><li>Fairness and subgroup performance — does the model work equally well for your patient population?</li><li>Frameworks: TRIPOD-AI, CONSORT-AI, DECIDE-AI, MI-CLAIM, APPRAISE-AI.</li></ul>
+        <span class="clinician-tag">Clinician as evaluator</span>
+      </div>
+    </div>
+    <div id="step7" class="step-detail">
+      <div class="step-detail-title">Step 7 — Registration</div>
+      <div class="step-detail-body">Register tools with the relevant authority (medical device authority) to market for broader use and application.
+        <ul><li>FDA has cleared over 1,000 predominantly radiological AI tools.</li><li>Key distinction: diagnostic/treatment AI is under FDA purview. Administrative AI, wellness apps, and general LLMs are not.</li><li>Malaysia: check MOH and MDA guidance; MMC Guideline on Ethical Use of AI in Medical Practice (2025) applies.</li></ul>
+        <span class="clinician-tag">Clinician as regulatory voice</span>
+      </div>
+    </div>
+    <div id="step8" class="step-detail">
+      <div class="step-detail-title">Step 8 — Deployment &amp; monitoring</div>
+      <div class="step-detail-body">Deployment strategy that considers the software systems or applications environment, user interfaces of alerts or notifications that achieve practice efficiency and provider acceptance and adoption.
+        <ul><li>Alert fatigue is a real risk — the design of how AI outputs are presented matters as much as their accuracy.</li><li>AI tools can be copilots (real-time), asynchronous (offline analysis), or autonomous (end-to-end).</li><li>Post-deployment: watch for model drift as patient populations and clinical practice change.</li></ul>
+        <span class="clinician-tag">Clinician as monitor</span>
+      </div>
+    </div>
+    <div id="step9" class="step-detail">
+      <div class="step-detail-title">Step 9 — Improve the AI ecosystem</div>
+      <div class="step-detail-body">Active and continuous engagement with all stakeholders including the public to improve confidence and to progress the AI ecosystem.
+        <ul><li>The AI ecosystem has 8 components: data quality, technology infrastructure, talent, regulatory frameworks, industry collaboration, market investment, user feedback, and risk management.</li><li>Clinician feedback loops are the most underused and most valuable input for ecosystem improvement.</li></ul>
+        <span class="clinician-tag">Clinician as advocate</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SESSION 1 -->
+<section id="session1">
+  <div class="wrap">
+    <p class="sess-eyebrow" style="color:var(--blue);">Session 1 · 75 min · Discussion-led</p>
+    <h2 class="sess-title">Why AI? Identifying clinical problems<br>and building the right team</h2>
+    <p class="sess-desc">Understand what kinds of problems are genuinely suitable for AI, what different levels of AI use look like, and what role you play in the development team.</p>
+    <div class="sess-meta">
+      <span class="tag" style="color:var(--blue-dark);border-color:var(--blue-light);">Steps 1 &amp; 2</span>
+      <span class="tag" style="color:var(--blue-dark);border-color:var(--blue-light);">Clinician as problem-owner</span>
+    </div>
+    <div class="divider"></div>
+
+    <h3 class="blk">The AI landscape — from narrow AI to AGI</h3>
+    <div class="prose"><p>AI is the cognitive ability of machines made possible by mathematically designed neural networks. The hierarchy runs from AI (mathematical algorithms) → ML (self-learning algorithms) → DL (multiple neural networks, e.g. NLP, computer vision, generative AI) → AGI (hypothetical human-level general intelligence). Crucially, <strong>Augmented Intelligence (AugI)</strong> supplements and enhances human ability rather than substituting it — this is the most clinically relevant framing.</p></div>
+
+    <h3 class="blk">Three levels of AI usage — where do you sit?</h3>
+    <div class="card">
+      <div class="card-title" style="color:var(--green);">Level 1 — General use (zero-shot)</div>
+      <div class="card-body">Using existing AI models with prompting. Examples: Claude, ChatGPT, Gemini for clinical writing, summarising guidelines, drafting referrals. No infrastructure needed. This is where most clinicians start — and where prompt engineering matters.</div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--amber-dark);">Level 2 — Fine-tuned model</div>
+      <div class="card-body">Adapting an existing model to a specific clinical task or dataset. Examples: BioBERT for biomedical NLP, MedGemma for medical image and text, AI diagnosis assistants trained on local EMR data. Requires data and technical collaboration — clinician defines the problem and validates outputs.</div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--purple-dark);">Level 3 — New model from scratch</div>
+      <div class="card-body">Creating a new AI model from scratch. Examples: AlphaFold (protein folding), GPT/LLaMA trained from massive corpora, pretraining models on de-identified EMR data across hospitals. Extremely expensive — requires hundreds of GPUs running for weeks. Rare in clinical settings; usually requires a funded research programme.</div>
+    </div>
+
+    <div class="callout callout-amber">
+      <div class="callout-title">The "crossing the chasm" challenge</div>
+      Moving from general AI use to personalised AI requires crossing six chasms: weak digital infrastructure, scarcity of local data, workforce skill shortages, financial constraints, governance gaps, and adoption challenges. Understanding which chasm your institution is stuck in shapes which problems are currently AI-solvable.
+    </div>
+
+    <h3 class="blk">Identifying the right problem</h3>
+    <ul class="list-clean l-blue">
+      <li><strong>Descriptive</strong> — patient profiling, disease patterns (past/present)</li>
+      <li><strong>Diagnostic</strong> — early detection, risk assessment (present)</li>
+      <li><strong>Predictive</strong> — complication risk prediction, treatment response (future)</li>
+      <li><strong>Prescriptive</strong> — personalised treatment plans, behavioural interventions (future, highest value)</li>
+      <li><strong>Signs</strong> — vision intelligence: image recognition, radiology, pathology (e.g. ECgMLP achieving 99.26% accuracy in endometrial cancer detection)</li>
+      <li><strong>Symptoms</strong> — NLP: summarisation, classification, extraction, translation, conversation in clinical contexts</li>
+      <li><strong>Actions</strong> — robotics, procedural assistance, autonomous systems</li>
+    </ul>
+
+    <h3 class="blk">The ideal development team</h3>
+    <div class="prose"><p>Building a new AI model from scratch requires at minimum 12 roles: Project Lead/Clinical Champion, Product Manager, AI/ML Engineer, Data Scientists, Lead Software Architect, UI/UX Designer, Backend Developer, Frontend Developer, Mobile App Developer, AI Integration Specialist/Prompt Engineer, QA Engineer, and Clinical Experts/Advisors. The clinician is both the <strong>clinical champion</strong> and the <strong>domain expert advisor</strong> — indispensable at every stage.</p></div>
+
+    <!-- QUIZ 1 -->
+    <div class="quiz-block">
+      <div class="quiz-header"><span class="quiz-badge">Reflection</span><span class="quiz-title-text">Session 1 — Check your understanding</span></div>
+      <div class="quiz-body">
+        <div class="quiz-q">A colleague wants to build an AI tool that predicts which patients with type 2 diabetes are at high risk of hospitalisation in the next 12 months, using existing EMR data. Which level of AI development does this most likely require?</div>
+        <div class="quiz-options" id="q1">
+          <div class="quiz-opt" onclick="answer(this,'q1','wrong')"><div class="opt-icon"></div>Level 1 — General use with prompting only</div>
+          <div class="quiz-opt" onclick="answer(this,'q1','correct')"><div class="opt-icon"></div>Level 2 — A fine-tuned model trained on local EMR data</div>
+          <div class="quiz-opt" onclick="answer(this,'q1','wrong')"><div class="opt-icon"></div>Level 3 — A new model built from scratch, like GPT</div>
+          <div class="quiz-opt" onclick="answer(this,'q1','wrong')"><div class="opt-icon"></div>This is a rule-based system, not AI</div>
+        </div>
+        <div class="quiz-feedback fb-correct show" id="q1-fb-correct" style="display:none">
+          <div class="fb-label">Correct</div>
+          A predictive risk model using existing patient data is a classic fine-tuning task. A general LLM can't do this without training on local data — but building from scratch would be disproportionately expensive. The clinician's role here is to define "hospitalisation risk", identify which variables matter clinically, and validate outputs against real patient outcomes.
+        </div>
+        <div class="quiz-feedback fb-incorrect" id="q1-fb-incorrect">
+          <div class="fb-label">Not quite</div>
+          Predicting patient risk from EMR data requires a model trained on local, labelled clinical data — that's fine-tuning. General prompting can't access your EMR, and building from scratch would be unnecessary and extremely expensive. The predictive problem type sits in the future quadrant of the Descriptive → Diagnostic → Predictive → Prescriptive framework.
+        </div>
+        <div class="quiz-reset" onclick="resetQuiz('q1')" id="q1-reset">Try again</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SESSION 2 -->
+<section id="session2">
+  <div class="wrap">
+    <p class="sess-eyebrow" style="color:var(--green-mid);">Session 2 · 75 min · Concept + case-based</p>
+    <h2 class="sess-title">Data, infrastructure<br>and building the model</h2>
+    <p class="sess-desc">What makes clinical data suitable, how annotation and labelling works, what infrastructure means in practice, and how to critically assess the foundations of any AI tool.</p>
+    <div class="sess-meta">
+      <span class="tag" style="color:var(--green);border-color:var(--green-light);">Steps 3, 4 &amp; 5</span>
+      <span class="tag" style="color:var(--green);border-color:var(--green-light);">Clinician as data guardian</span>
+    </div>
+    <div class="divider"></div>
+
+    <h3 class="blk">What makes data suitable for AI?</h3>
+    <ul class="list-clean l-green">
+      <li><strong>Quality</strong> — accurate, complete, consistent, with meaningful labels annotated by clinicians</li>
+      <li><strong>Quantity</strong> — sufficient volume to train a generalisable model</li>
+      <li><strong>Representativeness</strong> — reflects your patient population, not just the populations of Western academic centres</li>
+      <li><strong>Interoperability</strong> — standardised for linkage across systems (HL7 FHIR, SNOMED CT, ICD-10/11)</li>
+      <li><strong>De-identification</strong> — compliant with PDPA and institutional data governance requirements</li>
+    </ul>
+
+    <div class="callout callout-green">
+      <div class="callout-title">The data guardian principle</div>
+      General AI (without supportive infrastructure) uses generic, uncurated, or sparse data → produces generic suggestions with limited relevance. Personalised AI (with infrastructure) uses curated, rich, interoperable data with metadata → produces context-aware, actionable recommendations. Clinicians are the only people who can judge whether labels are clinically meaningful and whether the data truly represents their patients.
+    </div>
+
+    <h3 class="blk">Learning types — what clinicians need to know</h3>
+    <div class="card"><div class="card-title">Supervised learning</div><div class="card-body">Trained on labelled data. The model learns to map inputs to outputs. Most clinical prediction models use this — and clinicians are the labellers. Your annotation decisions determine model quality.</div></div>
+    <div class="card"><div class="card-title">Unsupervised learning</div><div class="card-body">No predefined labels. The model finds patterns. Useful for patient clustering, anomaly detection, discovering disease subtypes you didn't know existed.</div></div>
+    <div class="card"><div class="card-title">Reinforcement learning</div><div class="card-body">An agent learns by receiving rewards or penalties. Used in robotics, game AI, and increasingly in clinical decision optimisation (e.g. personalised treatment dose adjustment).</div></div>
+    <div class="card"><div class="card-title">Transfer &amp; federated learning</div><div class="card-body">Transfer learning reuses a model trained on one task for another. Federated learning trains locally on each device — only model updates are shared, not patient data. This is the privacy-preserving approach hospitals should demand.</div></div>
+
+    <h3 class="blk">Programmed systems vs true AI — the critical distinction</h3>
+    <div class="prose"><p>Many tools described as "AI" are actually rule-based programmed systems. The distinction matters because clinicians should apply different levels of scrutiny. Rule-based systems are transparent and predictable; true AI systems learn from data and may behave unexpectedly outside their training distribution.</p></div>
+
+    <div class="card">
+      <div class="card-title">Key distinction: programmed vs AI</div>
+      <div class="card-body" style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.78rem;min-width:400px">
+          <tr style="background:var(--blue-light)"><td style="padding:6px 8px;font-weight:600;color:var(--blue-dark);">Programmed system</td><td style="padding:6px 8px;font-weight:600;color:var(--blue-dark);">True AI equivalent</td></tr>
+          <tr style="border-top:1px solid var(--border)"><td style="padding:5px 8px;color:var(--ink-2)">Drug-drug interaction checker</td><td style="padding:5px 8px;color:var(--ink-2)">DL model predicting adverse drug reactions</td></tr>
+          <tr style="border-top:1px solid var(--border)"><td style="padding:5px 8px;color:var(--ink-2)">Symptom checker in telemedicine</td><td style="padding:5px 8px;color:var(--ink-2)">NLP model for clinical note analysis</td></tr>
+          <tr style="border-top:1px solid var(--border)"><td style="padding:5px 8px;color:var(--ink-2)">Appointment scheduling chatbot</td><td style="padding:5px 8px;color:var(--ink-2)">Transformer chatbot with sentiment analysis</td></tr>
+          <tr style="border-top:1px solid var(--border)"><td style="padding:5px 8px;color:var(--ink-2)">ECG interpretation software</td><td style="padding:5px 8px;color:var(--ink-2)">CNN for heart disease diagnosis</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- QUIZ 2 -->
+    <div class="quiz-block">
+      <div class="quiz-header"><span class="quiz-badge">Reflection</span><span class="quiz-title-text">Session 2 — Check your understanding</span></div>
+      <div class="quiz-body">
+        <div class="quiz-q">A hospital wants to train an AI model to detect diabetic retinopathy from retinal photographs. The data science team says they have 50,000 retinal images but none are labelled. What is the most important contribution clinicians can make at this stage?</div>
+        <div class="quiz-options" id="q2">
+          <div class="quiz-opt" onclick="answer(this,'q2','wrong')"><div class="opt-icon"></div>Decide which neural network architecture to use</div>
+          <div class="quiz-opt" onclick="answer(this,'q2','correct')"><div class="opt-icon"></div>Annotate the images with clinically meaningful labels and define the grading criteria</div>
+          <div class="quiz-opt" onclick="answer(this,'q2','wrong')"><div class="opt-icon"></div>Increase the dataset size by collecting more images first</div>
+          <div class="quiz-opt" onclick="answer(this,'q2','wrong')"><div class="opt-icon"></div>Ensure the images are de-identified — that is the only clinical input needed</div>
+        </div>
+        <div class="quiz-feedback fb-correct" id="q2-fb-correct">
+          <div class="fb-label">Exactly right</div>
+          Without clinician annotation, 50,000 images are just unlabelled data. The model learns to predict the label you give it — which means clinically meaningful, consistent, and well-defined labels are the foundation of model quality. Neural network architecture is a data scientist decision. De-identification is necessary but not sufficient. Volume matters less than label quality.
+        </div>
+        <div class="quiz-feedback fb-incorrect" id="q2-fb-incorrect">
+          <div class="fb-label">Not quite</div>
+          The most critical bottleneck here is annotation — supervised learning requires labelled data, and only clinicians can provide clinically meaningful labels. Neural network choice, de-identification, and dataset size are all important, but none of them substitute for the clinical expertise needed to grade retinal images accurately and consistently.
+        </div>
+        <div class="quiz-reset" onclick="resetQuiz('q2')" id="q2-reset">Try again</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SESSION 3 -->
+<section id="session3">
+  <div class="wrap">
+    <p class="sess-eyebrow" style="color:var(--amber);">Session 3 · 75 min · Framework-focused</p>
+    <h2 class="sess-title">Validating, evaluating<br>and registering an AI tool</h2>
+    <p class="sess-desc">The metrics clinicians must understand, the frameworks that govern AI reporting, and the registration pathways — including what is and isn't under regulatory control in Malaysia and globally.</p>
+    <div class="sess-meta">
+      <span class="tag" style="color:var(--amber-dark);border-color:var(--amber-light);">Steps 6 &amp; 7</span>
+      <span class="tag" style="color:var(--amber-dark);border-color:var(--amber-light);">Clinician as evaluator</span>
+    </div>
+    <div class="divider"></div>
+
+    <h3 class="blk">The validation ladder</h3>
+    <ul class="list-clean l-amber">
+      <li><strong>Internal validation</strong> — tested on the same data distribution it was trained on. Necessary but not sufficient.</li>
+      <li><strong>External validation</strong> — tested on data from a different institution or time period. Essential before clinical use.</li>
+      <li><strong>Prospective validation</strong> — tested on new patients as they present. The gold standard.</li>
+      <li><strong>Sandboxing</strong> — safe pre-deployment testing in real-life settings without affecting critical care decisions.</li>
+    </ul>
+
+    <h3 class="blk">Metrics clinicians must demand</h3>
+    <div class="card"><div class="card-title">Sensitivity &amp; specificity</div><div class="card-body">How often does the model correctly identify disease (sensitivity) and correctly exclude it (specificity)? The trade-off between these is context-dependent — a screening tool prioritises sensitivity; a confirmatory test prioritises specificity.</div></div>
+    <div class="card"><div class="card-title">AUC (Area Under Curve)</div><div class="card-body">Overall discriminative ability. AUC of 0.5 = random; 1.0 = perfect. Above 0.8 is generally considered good clinical performance — but AUC alone tells you nothing about calibration.</div></div>
+    <div class="card"><div class="card-title">Calibration</div><div class="card-body">Does a predicted 70% risk actually correspond to 70% of patients having the outcome? A well-calibrated model is essential for clinical decision-making. Most papers report AUC without calibration — ask for it.</div></div>
+    <div class="card"><div class="card-title">Subgroup performance &amp; fairness</div><div class="card-body">Does the model perform equally well across age groups, ethnic groups, and comorbidities? AI trained predominantly on non-local populations may perform worse for your patients. Always ask: who was in the training data?</div></div>
+
+    <div class="callout callout-amber">
+      <div class="callout-title">The transparency toolkit — overcoming the black box</div>
+      SHAP (Shapley Additive Explanations) — how much each clinical variable influenced the prediction. LIME (Local Interpretable Model-agnostic Explanations) — why the AI made this specific decision for this patient. Grad-CAM — highlights which regions of a medical image the AI focused on. Clinicians should demand these tools for any AI used in high-stakes decisions.
+    </div>
+
+    <h3 class="blk">Reporting frameworks — a quick reference</h3>
+    <ul class="list-clean l-amber">
+      <li><strong>TRIPOD+AI</strong> — 27-item checklist for prediction model development and validation <a href="https://doi.org/10.1136/bmj-2023-078378" target="_blank" rel="noopener">↗</a></li>
+      <li><strong>CONSORT-AI</strong> — 14 new items for clinical trials with AI components <a href="https://doi.org/10.1038/s41591-020-1034-x" target="_blank" rel="noopener">↗</a></li>
+      <li><strong>SPIRIT-AI</strong> — 15 new items for clinical trial protocols with AI <a href="https://doi.org/10.1038/s41591-020-1037-7" target="_blank" rel="noopener">↗</a></li>
+      <li><strong>DECIDE-AI</strong> — for early-stage clinical studies of AI decision support systems <a href="https://doi.org/10.1038/s41591-022-01772-9" target="_blank" rel="noopener">↗</a></li>
+      <li><strong>MI-CLAIM</strong> — minimum information for clinical AI modelling, enabling fairness and bias assessment <a href="https://doi.org/10.1038/s41591-020-1041-y" target="_blank" rel="noopener">↗</a></li>
+      <li><strong>APPRAISE-AI</strong> — evaluates quality of AI studies across 6 domains; 24 items, maximum 100 points <a href="https://doi.org/10.1001/jamanetworkopen.2023.35377" target="_blank" rel="noopener">↗</a></li>
+      <li><strong>OPTICA tool</strong> — 13-chapter organisational checklist for AI solutions adoption in health care <a href="https://doi.org/10.1056/AIcs2300269" target="_blank" rel="noopener">↗</a></li>
+    </ul>
+
+    <h3 class="blk">Registration — what is and isn't regulated</h3>
+    <div class="card">
+      <div class="card-title" style="color:var(--green);">Under FDA regulatory purview</div>
+      <div class="card-body">Machines for diagnosing, treating, or preventing disease. Over 1,000 predominantly radiological AI tools have been cleared. Some health care apps. Software that fits the definition of a medical device.</div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--coral-dark);">NOT under FDA regulatory purview</div>
+      <div class="card-body">Generative AI models broadly applicable to multiple tasks (including ChatGPT, Claude, Gemini). Administrative software. Patient-facing mental health wellness apps. Tools for hospital resource allocation. Software where clinicians will not primarily rely on recommendations. <em>This gap has significant implications for accountability.</em></div>
+    </div>
+    <div class="callout callout-coral">
+      <div class="callout-title">Malaysia — MMC Guideline 2025</div>
+      The Malaysian Medical Council has issued a Guideline on the Ethical Use of AI in Medical Practice (Version 1/2025). Registered medical practitioners continue to be bound by MMC's Code of Professional Conduct. They must develop skills to apply AI critically, evaluate recommendations based on professional clinical insight, and communicate AI benefits, risks, and limitations to facilitate informed consent. <a href="https://mmc.gov.my/wp-content/uploads/2025/09/MMC-Guideline-on-The-Ethical-Use-of-Artificial-Intelligence-AI-.pdf" target="_blank" rel="noopener">Read the full guideline ↗</a>
+    </div>
+
+    <!-- QUIZ 3 -->
+    <div class="quiz-block">
+      <div class="quiz-header"><span class="quiz-badge">Reflection</span><span class="quiz-title-text">Session 3 — Check your understanding</span></div>
+      <div class="quiz-body">
+        <div class="quiz-q">A vendor presents an AI sepsis prediction tool with an AUC of 0.91, validated on 200,000 patients from three US academic medical centres. You are considering deploying it in your Malaysian district hospital. What is your most important question?</div>
+        <div class="quiz-options" id="q3">
+          <div class="quiz-opt" onclick="answer(this,'q3','wrong')"><div class="opt-icon"></div>Is the AUC above 0.9? If yes, the tool is clinically excellent.</div>
+          <div class="quiz-opt" onclick="answer(this,'q3','wrong')"><div class="opt-icon"></div>Has this been published in a peer-reviewed journal?</div>
+          <div class="quiz-opt" onclick="answer(this,'q3','correct')"><div class="opt-icon"></div>How does it perform in populations demographically similar to our patients, and has it been externally validated in a Southeast Asian setting?</div>
+          <div class="quiz-opt" onclick="answer(this,'q3','wrong')"><div class="opt-icon"></div>Is it FDA-cleared?</div>
+        </div>
+        <div class="quiz-feedback fb-correct" id="q3-fb-correct">
+          <div class="fb-label">Excellent clinical thinking</div>
+          High AUC in a US academic centre does not translate directly to performance in a Malaysian district hospital where patient demographics, comorbidity profiles, and clinical workflows differ significantly. External validation in a similar population is the critical question. FDA clearance and peer-reviewed publication are important but secondary to fitness for your specific context.
+        </div>
+        <div class="quiz-feedback fb-incorrect" id="q3-fb-incorrect">
+          <div class="fb-label">Look again</div>
+          The key issue here is population generalisability. An excellent AUC in a US academic centre tells you little about performance in Malaysian district hospitals. Publication and FDA clearance matter — but a tool can have both and still perform poorly in your population. Always ask: where was it validated, and how similar is that population to mine?
+        </div>
+        <div class="quiz-reset" onclick="resetQuiz('q3')" id="q3-reset">Try again</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SESSION 4 -->
+<section id="session4">
+  <div class="wrap">
+    <p class="sess-eyebrow" style="color:var(--purple);">Session 4 · 75 min · Governance capstone</p>
+    <h2 class="sess-title">Deployment, monitoring<br>and the AI ecosystem</h2>
+    <p class="sess-desc">How AI tools enter clinical workflows, why models degrade, and what clinicians and administrators must do to maintain safe, effective, equitable AI in their institutions.</p>
+    <div class="sess-meta">
+      <span class="tag" style="color:var(--purple-dark);border-color:var(--purple-light);">Steps 8 &amp; 9</span>
+      <span class="tag" style="color:var(--purple-dark);border-color:var(--purple-light);">Clinician as monitor &amp; advocate</span>
+    </div>
+    <div class="divider"></div>
+
+    <h3 class="blk">Challenges in healthcare AI — the four domains</h3>
+    <div class="card"><div class="card-title">1. Development to deployment — TEAM</div><div class="card-body">Without the right multidisciplinary team from the start, AI tools that technically work may fail clinically. Clinicians who are not involved early are then asked to adopt tools that don't fit their workflow.</div></div>
+    <div class="card"><div class="card-title">2. Data quality and security — INFRASTRUCTURE</div><div class="card-body">AI without supportive data infrastructure produces generic, low-relevance outputs. Secure, standardised, accessible data is the foundation — and the biggest gap in most healthcare settings.</div></div>
+    <div class="card"><div class="card-title">3. Integration in clinical workflows — AWARENESS</div><div class="card-body">Alert fatigue, poor UI design, and lack of training lead to tools being ignored or misused. Clinical champions who understand both the tool and the workflow are essential for adoption.</div></div>
+    <div class="card"><div class="card-title">4. Transparency and accountability — POLICY</div><div class="card-body">Without clear governance, liability is diffuse. When AI-assisted decisions cause harm, who is responsible? Current legal and regulatory frameworks are still catching up — clinician advocacy for policy is urgent.</div></div>
+
+    <div class="callout callout-purple">
+      <div class="callout-title">The next and ultimate challenge is our creativity</div>
+      Team, infrastructure, awareness, and policy are solvable problems. But the organisations that will truly benefit from AI are those that build practical "testing grounds" for real hands-on practice — and that allow clinicians to run with their insights. Data has to be king: secure yet accessible, standardised across departments, and open for experimentation.
+      <br><br>Source: <a href="https://howardyu.substack.com/p/one-chart-that-shows-why-ai-requires" target="_blank" rel="noopener" style="color:var(--purple-dark)">Howard Yu, March 2025 ↗</a>
+    </div>
+
+    <h3 class="blk">The AI ecosystem — 8 components</h3>
+    <ul class="list-clean l-purple">
+      <li><strong>Data quality and availability</strong> — high-quality, diverse, privacy-protected sources</li>
+      <li><strong>Technology infrastructure</strong> — hardware, software frameworks, development tools</li>
+      <li><strong>Talent and expertise</strong> — data scientists, engineers, clinical domain experts</li>
+      <li><strong>Regulatory and ethical frameworks</strong> — clear guidelines, accountability mechanisms</li>
+      <li><strong>Industry collaboration</strong> — partnerships across hospitals, universities, industry</li>
+      <li><strong>Market demand and investment</strong> — funding and institutional support</li>
+      <li><strong>User adoption and feedback loop</strong> — clinician engagement informs AI improvement</li>
+      <li><strong>Risk management and resilience</strong> — proactive cybersecurity, incident pathways</li>
+    </ul>
+
+    <h3 class="blk">Watch your colleague present on implementing AI in practice</h3>
+    <div class="prose" style="margin-bottom:0.75rem;"><p>Prof Kee Yuan Ngiam (co-author of the source paper, Head of AI Office, NUHS Singapore) presents on real-world AI implementation at the BrainX Community Live event, May 2025. This is a clinician-to-clinician account of what AI deployment actually looks like from inside a health system.</p></div>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/R0GkII6EyJg" title="Implementing AI in Practice — Prof Kee Yuan Ngiam" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <p style="font-size:0.75rem;color:var(--ink-4);margin-top:0.5rem;">BrainX Community Live · May 2025 · <a href="https://youtu.be/R0GkII6EyJg" target="_blank" rel="noopener">youtu.be/R0GkII6EyJg ↗</a></p>
+
+    <!-- QUIZ 4 -->
+    <div class="quiz-block">
+      <div class="quiz-header"><span class="quiz-badge">Reflection</span><span class="quiz-title-text">Session 4 — Capstone</span></div>
+      <div class="quiz-body">
+        <div class="quiz-q">Six months after deploying an AI early warning system for acute kidney injury, nurses report that the alert fires so frequently that most staff have stopped acting on it. The sensitivity is high but clinicians are ignoring it. Which concept best explains this failure, and what domain does it belong to?</div>
+        <div class="quiz-options" id="q4">
+          <div class="quiz-opt" onclick="answer(this,'q4','wrong')"><div class="opt-icon"></div>Hallucination — the AI is generating incorrect outputs (Model failure)</div>
+          <div class="quiz-opt" onclick="answer(this,'q4','wrong')"><div class="opt-icon"></div>Training data bias — the model wasn't trained on enough AKI cases (Data failure)</div>
+          <div class="quiz-opt" onclick="answer(this,'q4','correct')"><div class="opt-icon"></div>Alert fatigue — too many alerts desensitise clinicians, undermining even accurate outputs (Deployment failure)</div>
+          <div class="quiz-opt" onclick="answer(this,'q4','wrong')"><div class="opt-icon"></div>Automation bias — clinicians are over-trusting the AI (Awareness failure)</div>
+        </div>
+        <div class="quiz-feedback fb-correct" id="q4-fb-correct">
+          <div class="fb-label">Well reasoned</div>
+          Alert fatigue is a deployment and integration failure — it has nothing to do with model accuracy. A highly sensitive model that fires too often creates a "cry wolf" effect, ultimately making the system less safe than no system at all. The fix requires redesigning the alert interface, adjusting threshold triggers, and involving clinicians in the deployment design from the start. This is squarely in the Integration domain: AWARENESS.
+        </div>
+        <div class="quiz-feedback fb-incorrect" id="q4-fb-incorrect">
+          <div class="fb-label">Look again</div>
+          The model itself may be working correctly — high sensitivity means it's catching AKI cases. The failure is in how the output is delivered and received. When alerts are too frequent, clinicians become desensitised — this is alert fatigue, a well-documented deployment integration problem. It belongs in the AWARENESS domain of the four-challenge framework.
+        </div>
+        <div class="quiz-reset" onclick="resetQuiz('q4')" id="q4-reset">Try again</div>
+      </div>
+    </div>
+
+    <h3 class="blk">Programme closing takeaways</h3>
+    <ul class="list-clean l-purple">
+      <li>AI tool development is a <strong>cyclical 9-step process</strong> — clinician involvement is required at every step, not just at the end.</li>
+      <li>The most important thing a clinician brings to AI development is <strong>domain expertise, clinical judgement, and accountability</strong> — none of which can be automated.</li>
+      <li>Understanding this process helps you <strong>codesign, evaluate, monitor, and regulate</strong> AI tools more effectively than any clinician who remains uninformed.</li>
+      <li>Appropriate AI in healthcare is <strong>ethical, clinically validated, and seamlessly integrated</strong> — all three conditions must be met, not just one.</li>
+      <li><em>"AI only enhances who you already are, or wanted to be."</em> — the question is whether you build the skills to direct it.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- GLOSSARY -->
+<section id="glossary">
+  <div class="wrap">
+    <p class="sess-eyebrow" style="color:var(--ink-4);">Interactive reference</p>
+    <h2 class="sess-title">Glossary of AI &amp; ML terms</h2>
+    <p style="font-size:0.85rem;color:var(--ink-3);margin-bottom:1.25rem;">65 terms from the supplementary materials to Chew &amp; Ngiam 2025. Search by keyword or filter by session. Tap any term to expand the definition.</p>
+
+    <input class="glossary-search" type="text" id="gSearch" placeholder="Search terms..." oninput="filterGlossary()">
+    <div class="glossary-filter">
+      <div class="gfil on" onclick="setFilter('all',this)">All</div>
+      <div class="gfil" onclick="setFilter('s1',this)">Session 1</div>
+      <div class="gfil" onclick="setFilter('s2',this)">Session 2</div>
+      <div class="gfil" onclick="setFilter('s3',this)">Session 3</div>
+      <div class="gfil" onclick="setFilter('s4',this)">Session 4</div>
+    </div>
+
+    <div id="glossary-list">
+      <!-- Generated by JS below -->
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section id="resources">
+  <div class="wrap">
+    <p class="sess-eyebrow" style="color:var(--ink-4);">Further reading &amp; tools</p>
+    <h2 class="sess-title">Resources</h2>
+    <p style="font-size:0.85rem;color:var(--ink-3);margin-bottom:1.25rem;">Papers, guidelines, organisations, and tools referenced across all four sessions. All links open in a new tab.</p>
+
+    <h3 class="blk">Core papers</h3>
+    <div class="reading-card"><div class="ricon ri-blue">BMC</div><div class="rbody"><div class="rjournal">BMC Medicine · 2025</div><div class="rtitle">Artificial intelligence tool development: what clinicians need to know</div><div class="rnote">The primary source for this programme. Full open-access review of the 9-step AI development cycle — Chew &amp; Ngiam.</div><a class="rlink" href="https://doi.org/10.1186/s12916-025-04076-0" target="_blank" rel="noopener">doi.org/10.1186/s12916-025-04076-0 ↗</a></div></div>
+    <div class="reading-card"><div class="ricon ri-purple">JMIR</div><div class="rbody"><div class="rjournal">JMIR AI · 2026</div><div class="rtitle">Important Ethical, Technical, and Epidemiological Considerations in an AI Tool Production (ETEPAI): Scoping Review</div><div class="rnote">Companion paper covering ethics, technical, and epidemiological considerations across the four stages of AI tool development.</div><a class="rlink" href="https://ai.jmir.org/2026/1/e80340" target="_blank" rel="noopener">ai.jmir.org/2026/1/e80340 ↗</a>&nbsp;&nbsp;<a class="rlink" href="https://doi.org/10.5281/zenodo.14799133" target="_blank" rel="noopener">Preprint (Zenodo) ↗</a></div></div>
+    <div class="reading-card"><div class="ricon ri-amber">NAM</div><div class="rbody"><div class="rjournal">National Academies · 2025</div><div class="rtitle">An Artificial Intelligence Code of Conduct for Health and Medicine: Essential Guidance for Aligned Action</div><div class="rnote">Foundational governance document from the National Academies of Sciences, Engineering, and Medicine.</div><a class="rlink" href="https://doi.org/10.17226/29087" target="_blank" rel="noopener">doi.org/10.17226/29087 ↗</a></div></div>
+
+    <h3 class="blk">Evaluation &amp; reporting frameworks</h3>
+    <div class="reading-card"><div class="ricon ri-green">NPJ</div><div class="rbody"><div class="rjournal">npj Digital Medicine · 2024</div><div class="rtitle">OPTICA: Organisational PerspecTIve Checklist for AI solutions adoption in health care organisations</div><div class="rnote">13-chapter checklist with 5 key stakeholders. Practical end-to-end tool for evaluating AI in new clinical settings.</div><a class="rlink" href="https://doi.org/10.1056/AIcs2300269" target="_blank" rel="noopener">doi.org/10.1056/AIcs2300269 ↗</a></div></div>
+    <div class="reading-card"><div class="ricon ri-blue">NEJM</div><div class="rbody"><div class="rjournal">NEJM AI · 2025</div><div class="rtitle">Challenges in the Postmarket Surveillance of Clinical Prediction Models</div><div class="rnote">Addresses the complex problem of monitoring AI model performance after deployment — including model drift and confounding by clinical interventions.</div><a class="rlink" href="https://doi.org/10.1056/AIp2401116" target="_blank" rel="noopener">doi.org/10.1056/AIp2401116 ↗</a></div></div>
+    <div class="reading-card"><div class="ricon ri-amber">JAMA</div><div class="rbody"><div class="rjournal">JAMA · 2025</div><div class="rtitle">Regulation of Health and Health Care Artificial Intelligence</div><div class="rnote">Clear breakdown of what is and isn't under FDA regulatory purview, including the notable exclusion of general-purpose generative AI.</div><a class="rlink" href="https://doi.org/10.1001/jama.2025.3308" target="_blank" rel="noopener">doi.org/10.1001/jama.2025.3308 ↗</a></div></div>
+
+    <h3 class="blk">Malaysia-specific guidance</h3>
+    <div class="reading-card"><div class="ricon ri-coral">MMC</div><div class="rbody"><div class="rjournal">Malaysian Medical Council · 2025</div><div class="rtitle">Guideline on the Ethical Use of Artificial Intelligence in Medical Practice (Version 1/2025)</div><div class="rnote">The primary regulatory and professional guidance for Malaysian registered medical practitioners using AI in clinical practice.</div><a class="rlink" href="https://mmc.gov.my/wp-content/uploads/2025/09/MMC-Guideline-on-The-Ethical-Use-of-Artificial-Intelligence-AI-.pdf" target="_blank" rel="noopener">MMC guideline PDF ↗</a></div></div>
+
+    <h3 class="blk">Clinical AI examples &amp; emerging research</h3>
+    <div class="reading-card"><div class="ricon ri-blue">Nat</div><div class="rbody"><div class="rjournal">npj Digital Medicine · 2025</div><div class="rtitle">LLMs in healthcare — key task domains and principles for generative AI</div><div class="rnote">Framework summarising key LLM task domains (summarisation, classification, extraction, translation, conversation) with healthcare examples.</div><a class="rlink" href="https://www.nature.com/articles/s41746-025-01695-y" target="_blank" rel="noopener">nature.com ↗</a></div></div>
+    <div class="reading-card"><div class="ricon ri-green">Nat</div><div class="rbody"><div class="rjournal">npj Digital Medicine · 2025</div><div class="rtitle">Digital twins in surgery — three components and the 5 Is</div><div class="rnote">Explains the digital twin concept (individualized, interconnected, interactive, informative, impactful) with a surgical patient application.</div><a class="rlink" href="https://www.nature.com/articles/s41746-025-01575-5" target="_blank" rel="noopener">nature.com ↗</a></div></div>
+    <div class="reading-card"><div class="ricon ri-blue">Stf</div><div class="rbody"><div class="rjournal">Stanford Medicine · 2025</div><div class="rtitle">Stanford Health AI Week &amp; RAISE Health — AI in biomedicine, education, and policy</div><div class="rnote">"We've talked a lot about how we train the future physician to work with AI. I want to hear more about how we train AI to work with us."</div><a class="rlink" href="https://med.stanford.edu/news/all-news/2025/06/raise-health.html" target="_blank" rel="noopener">med.stanford.edu ↗</a></div></div>
+    <div class="reading-card"><div class="ricon ri-purple">arX</div><div class="rbody"><div class="rjournal">arXiv · 2025</div><div class="rtitle">AI Agents vs Agentic AI: A Conceptual Taxonomy, Applications and Challenges</div><div class="rnote">Distinguishes AI agents (LLM-driven, task-specific) from Agentic AI (multi-agent, autonomous). Relevant to understanding where clinical AI is heading.</div><a class="rlink" href="https://arxiv.org/abs/2505.10468" target="_blank" rel="noopener">arxiv.org/abs/2505.10468 ↗</a></div></div>
+
+    <h3 class="blk">Prof Chew's tools &amp; resources</h3>
+    <div class="reading-card"><div class="ricon ri-blue">BH</div><div class="rbody"><div class="rjournal">BoonHow AI Navigator</div><div class="rtitle">Ask Prof. Dr. Chew about clinical research, AI in medicine, and evidence-based practice</div><div class="rnote">An AI assistant trained on Prof Chew's CV, books, manuscripts, talks, teaching and training materials.</div><a class="rlink" href="https://you.com/?chatMode=user_mode_91d0c7e0-2b08-44c7-84b5-4365d97f6a5b" target="_blank" rel="noopener">Try BoonHow AI ↗</a>&nbsp;&nbsp;<a class="rlink" href="https://app.chatsimple.ai/sh/6378acbc" target="_blank" rel="noopener">ChatSimple version ↗</a></div></div>
+    <div class="reading-card"><div class="ricon ri-green">Poe</div><div class="rbody"><div class="rjournal">Poe AI Tools</div><div class="rtitle">SmartCoder_DD &amp; GetWellSoon — clinical AI tools built by Prof Chew</div><div class="rnote">SmartCoder_DD: AI-powered ICD-11 coding assistant for primary care physicians. GetWellSoon: plain-language clinical diagnosis explainer for patients.</div><a class="rlink" href="https://poe.com/SmartCoder_DD" target="_blank" rel="noopener">SmartCoder_DD ↗</a>&nbsp;&nbsp;<a class="rlink" href="https://poe.com/GetWellSoon" target="_blank" rel="noopener">GetWellSoon ↗</a></div></div>
+    <div class="reading-card"><div class="ricon ri-amber">Zen</div><div class="rbody"><div class="rjournal">Zenodo · 2025</div><div class="rtitle">Enhancing Research Proposal Preparation with AI: An Emerging Guide for Novel Researchers in Clinical and Health Sciences</div><div class="rnote">Prof Chew's open-access manual on using AI tools for clinical research proposal writing. Version 8, 318 downloads.</div><a class="rlink" href="https://zenodo.org/records/15074780" target="_blank" rel="noopener">zenodo.org/records/15074780 ↗</a></div></div>
+
+    <h3 class="blk">Key organisations</h3>
+    <div class="reading-card"><div class="ricon ri-coral">FDA</div><div class="rbody"><div class="rjournal">US Food &amp; Drug Administration</div><div class="rtitle">FDA List of AI/ML-Enabled Medical Devices</div><div class="rnote">The definitive list of AI/ML medical devices cleared for the US market. Essential reference for Session 3 on registration.</div><a class="rlink" href="https://www.fda.gov/medical-devices/software-medical-device-samd/artificial-intelligence-and-machine-learning-aiml-enabled-medical-devices" target="_blank" rel="noopener">fda.gov ↗</a></div></div>
+    <div class="reading-card"><div class="ricon ri-green">HAI</div><div class="rbody"><div class="rjournal">Stanford HAI &amp; RAISE Health</div><div class="rtitle">Human-Centered AI for biomedical research, education, and patient care</div><div class="rnote">Responsible AI tools and guidance for clinical use across Stanford's health system. Includes freely accessible resources.</div><a class="rlink" href="https://hai.stanford.edu" target="_blank" rel="noopener">hai.stanford.edu ↗</a>&nbsp;&nbsp;<a class="rlink" href="https://med.stanford.edu/raisehealth.html" target="_blank" rel="noopener">RAISE Health ↗</a></div></div>
+    <div class="reading-card"><div class="ricon ri-purple">NUS</div><div class="rbody"><div class="rjournal">WisDM, NUS Yong Loo Lin School of Medicine</div><div class="rtitle">Institute for Digital Medicine — Prof Kee Yuan Ngiam's group</div><div class="rnote">Co-author's institute. Source of the AI implementation practice and clinical AI deployment research underlying this programme.</div><a class="rlink" href="https://medicine.nus.edu.sg/trp/digital-medicine/" target="_blank" rel="noopener">medicine.nus.edu.sg ↗</a></div></div>
+    <div class="reading-card"><div class="ricon ri-amber">Com</div><div class="rbody"><div class="rjournal">Digital Health Avantgarde</div><div class="rtitle">WhatsApp community for clinicians interested in digital health &amp; AI</div><div class="rnote">Prof Chew's peer learning community. Feel free to reach out about your AI project.</div><a class="rlink" href="https://chat.whatsapp.com/KFO0Mk1jVvcCKqzWiCania" target="_blank" rel="noopener">Join the group ↗</a></div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="mystory">
+  <div class="wrap">
+    <p class="sess-eyebrow" style="color:var(--ink-4);">The facilitator</p>
+    <h2 class="sess-title">About Prof. Dr. Boon-How Chew</h2>
+    <div class="divider"></div>
+    <div style="background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:1.5rem 1.75rem;margin-bottom:1.5rem;border-left:4px solid var(--blue);">
+      <p style="font-size:0.875rem;color:var(--ink-2);line-height:1.8;">This programme is built on my own journey from clinical curiosity to credentialled AI practitioner — one that took months of self-directed learning, a sabbatical at NUS Singapore, and a conviction that clinicians who understand how AI tools are built are better positioned to ensure those tools actually help patients.</p>
+      <p style="font-size:0.875rem;color:var(--ink-2);line-height:1.8;margin-top:0.875rem;">The source paper (Chew &amp; Ngiam, BMC Medicine 2025) distils what I learned across the MIT No Code AI programme, the NUS AI for Healthcare programme, and the EITCA AI Academy — translated specifically for clinicians who do not have a technical background but need to be informed participants in AI development, not passive recipients of it.</p>
+      <p style="font-size:0.875rem;font-style:italic;color:var(--blue-dark);margin-top:0.875rem;line-height:1.7;">"Do consider AI technology in some forms in your research — because any research excluding AI technology is at risk of being irrelevant once it is completed in 2–3 years from now. It is because of the pervasiveness of the technology in almost every sphere and level of life and industry."</p>
+    </div>
+    <div style="background:var(--surface-2);border-radius:var(--r-lg);padding:1.25rem 1.5rem;display:flex;gap:1.2rem;align-items:flex-start;">
+      <div style="width:50px;height:50px;border-radius:50%;background:var(--blue-dark);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:1.15rem;flex-shrink:0;">BC</div>
+      <div>
+        <div style="font-size:0.95rem;font-weight:600;color:var(--ink);margin-bottom:0.2rem;">Prof. Dr. Boon-How Chew</div>
+        <div style="font-size:0.78rem;color:var(--ink-3);line-height:1.7;margin-bottom:0.6rem;">MD (USM) &nbsp;·&nbsp; MMed Fam. Med. (UM) &nbsp;·&nbsp; PhD (Utrecht)<br>MMC No. 36222 &nbsp;·&nbsp; NSR No. 125625<br>Professor &amp; Consultant Family Medicine Specialist<br>Family Medicine Specialist Clinic, HSAAS Teaching Hospital<br>Department of Family Medicine, Universiti Putra Malaysia (UPM)</div>
+        <div style="font-size:0.76rem;color:var(--blue-dark);font-weight:500;line-height:1.9;">
+          <a href="https://www.credential.net/c06596aa-f0d8-4bf8-b449-f13d1b1e5fa4#gs.afs3o4" target="_blank" rel="noopener" style="color:var(--blue-dark);text-decoration:none;border-bottom:1px solid var(--blue-light);">Credentialed in No Code AI and Machine Learning: Building Data Science Solutions &nbsp;·&nbsp; MIT ↗</a><br>
+          <a href="https://certificates.emeritus.org/c5c4fd55-198b-4fc8-8513-81d699b9e47c#gs.71pxz4" target="_blank" rel="noopener" style="color:var(--blue-dark);text-decoration:none;border-bottom:1px solid var(--blue-light);">Credentialed in AI For Healthcare Programme &nbsp;·&nbsp; NUS ↗</a>
+        </div>
+        <div style="margin-top:0.75rem;display:flex;flex-wrap:wrap;gap:0.5rem;">
+          <a href="mailto:chewboonhow@upm.edu.my" style="font-size:0.72rem;font-weight:500;color:var(--blue-dark);text-decoration:none;background:var(--blue-light);padding:0.25rem 0.75rem;border-radius:20px;">chewboonhow@upm.edu.my</a>
+          <a href="https://www.linkedin.com/in/boon-how-chew-80151b6/" target="_blank" rel="noopener" style="font-size:0.72rem;font-weight:500;color:var(--ink-3);text-decoration:none;background:#fff;border:1px solid var(--border);padding:0.25rem 0.75rem;border-radius:20px;">LinkedIn ↗</a>
+          <a href="http://orcid.org/0000-0002-8627-6248" target="_blank" rel="noopener" style="font-size:0.72rem;font-weight:500;color:var(--ink-3);text-decoration:none;background:#fff;border:1px solid var(--border);padding:0.25rem 0.75rem;border-radius:20px;">ORCID ↗</a>
+          <a href="https://zenodo.org/records/15074780" target="_blank" rel="noopener" style="font-size:0.72rem;font-weight:500;color:var(--ink-3);text-decoration:none;background:#fff;border:1px solid var(--border);padding:0.25rem 0.75rem;border-radius:20px;">AI for Research Manual ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="footer">
+  <strong>AI-Steady Clinician</strong> · second in a three-part series<br>
+  Designed and facilitated by <strong>Prof. Dr. Boon-How Chew</strong><br>
+  Professor of Family Medicine, Universiti Putra Malaysia (UPM)<br>
+  Senior Consultant Family Medicine Specialist, HSAAS<br><br>
+  <a href="mailto:chewboonhow@upm.edu.my">chewboonhow@upm.edu.my</a><br><br>
+  Based on: Chew &amp; Ngiam, BMC Medicine 2025. <a href="https://doi.org/10.1186/s12916-025-04076-0" target="_blank" rel="noopener">doi.org/10.1186/s12916-025-04076-0</a><br>
+  <span style="font-size:0.7rem;color:rgba(255,255,255,0.3);margin-top:0.75rem;display:block;">Free to share for non-commercial educational purposes. Please credit the author.</span>
+</footer>
+
+<a id="btt" href="#hero" title="Back to top">↑</a>
+
+<script>
+/* ── GLOSSARY DATA ─────────────────────────── */
+const terms = [
+  {id:'t1',name:'Digitisation vs Digitalisation vs Digital transformation',sess:'s1',color:'#185FA5',def:'Digitisation converts analog data into digital format. Digitalisation improves processes using digital data. Digital transformation is a complete paradigm shift reshaping organisations by leveraging technology.',ex:'A hospital scanning paper records = digitisation. Using those records in an EMR system to improve workflow = digitalisation. Rebuilding the entire care model around digital-first processes = digital transformation.'},
+  {id:'t2',name:'Artificial intelligence (AI)',sess:'s1',color:'#185FA5',def:'The cognitive ability of machines made possible by mathematically designed neural networks. Simulation of human intelligence to perform tasks that normally require human intelligence — learning, reasoning, problem-solving, perception, decision-making.',ex:'A system that reads chest X-rays and flags abnormalities is AI. One that follows a fixed rule ("if opacity in upper zone, flag TB") is not.'},
+  {id:'t3',name:'AI system',sess:'s1',color:'#185FA5',def:'A machine-based system that, for explicit or implicit objectives, infers from the input it receives how to generate outputs such as predictions, content, recommendations or decisions that can influence physical or virtual environments.',ex:'A clinical decision support tool that analyses patient data to predict sepsis risk and recommend interventions is an AI system.'},
+  {id:'t4',name:'AI system lifecycle',sess:'s1',color:'#185FA5',def:'The lifecycle phases: (i) design, data and models — context-dependent sequence of planning, data collection, and model building; (ii) verification and validation; (iii) deployment; (iv) operation and monitoring. Often iterative, not sequential.',ex:'Like drug development: discovery → pre-clinical → clinical trials → post-market surveillance. AI tools follow a similar lifecycle.'},
+  {id:'t5',name:'Machine learning (ML)',sess:'s1',color:'#185FA5',def:'AI as a machine that automatically learns from data with respect to a particular task and performance measure. It improves own performance over time without being explicitly programmed. A ML model is a mathematical representation of the relationship between inputs and outputs.',ex:'An ML model trained on 10,000 ECGs labelled by cardiologists learns to identify atrial fibrillation without being given explicit rules.'},
+  {id:'t6',name:'Deep learning (DL)',sess:'s1',color:'#185FA5',def:'A subset of ML that happens via algorithms inspired by the neural networks of the human brain. It learns complex patterns from large amounts of data. Has led to advances in image recognition, NLP, and speech recognition.',ex:'A retinal image classifier that achieves specialist-level accuracy on diabetic retinopathy grading uses deep learning.'},
+  {id:'t7',name:'Generative AI',sess:'s1',color:'#185FA5',def:'A class of deep learning models trained to generate data modalities in a manner similar to humans — text, images, audio, or video.',ex:'ChatGPT generating a draft referral letter. DALL-E creating a medical illustration. AI generating synthetic patient data for model training.'},
+  {id:'t8',name:'Multimodal AI',sess:'s1',color:'#185FA5',def:'AI systems capable of understanding and integrating diverse data types — text, audio, images, and video — to perform complex tasks.',ex:'An AI system that reads both a patient\'s clinical notes and their chest X-ray simultaneously to produce a more informed diagnostic suggestion.'},
+  {id:'t9',name:'Artificial General Intelligence (AGI)',sess:'s1',color:'#185FA5',def:'A hypothetical form of AI that possesses the ability to understand, learn, and apply knowledge across a wide range of tasks and domains, similar to human intelligence. Currently speculative and not yet realised.',ex:'Unlike narrow AI (designed for specific tasks), AGI would be able to diagnose disease, write a paper, and manage a clinic with equal proficiency — none of which exists today.'},
+  {id:'t10',name:'Neural networks',sess:'s1',color:'#185FA5',def:'Computational models inspired by the human brain, consisting of interconnected nodes (neurons) in layers. Types include: Feedforward (FNN), Convolutional (CNN) for images, Recurrent (RNN) for sequences, LSTM for long-range dependencies, GRU, Autoencoder, and Transformer.',ex:'A CNN is used for retinal image analysis. An RNN is used for analysing ECG time series. A Transformer powers ChatGPT.'},
+  {id:'t11',name:'Models vs Estimators',sess:'s2',color:'#639922',def:'A model is the mathematical structure used to make predictions (e.g. a CNN for image classification). An estimator is a higher-level construct that manages training, evaluation, and prediction — it wraps the model and handles data pipelines and training loops.',ex:'Think of the model as a car blueprint, and the estimator as the full manufacturing and testing process that turns the blueprint into a working vehicle.'},
+  {id:'t12',name:'Supervised learning',sess:'s2',color:'#639922',def:'ML where the model is trained on labelled data. Each input has a corresponding output label. The model learns to map inputs to outputs by minimising a loss function through iterative adjustments.',ex:'Training an AI to diagnose pneumonia from chest X-rays requires radiologists to label thousands of images as "pneumonia" or "normal".'},
+  {id:'t13',name:'Unsupervised learning',sess:'s2',color:'#639922',def:'ML where the model is trained on unlabelled data. The model learns to identify patterns and structures without explicit guidance.',ex:'Clustering patients with similar comorbidity profiles without predefined groups — discovering disease subtypes that clinicians had not previously described.'},
+  {id:'t14',name:'Reinforcement learning',sess:'s2',color:'#639922',def:'ML where an agent learns to make decisions by interacting with an environment and receiving feedback as rewards or penalties. Deep reinforcement learning combines this with deep neural networks.',ex:'AlphaGo. Robotics. Potentially: AI that optimises personalised drug dosing by learning from patient responses over time.'},
+  {id:'t15',name:'Zero-shot learning',sess:'s2',color:'#639922',def:'When an AI model solves a task it has not been specifically trained on. The model generalises from existing knowledge.',ex:'A model trained to translate English to Spanish being asked to translate English to French without prior training — and succeeding.'},
+  {id:'t16',name:'Few-shot learning',sess:'s2',color:'#639922',def:'The ability of an AI model to learn a task by seeing only a few examples. One-shot = one example; two-shot = two examples.',ex:'Showing a model just 2–3 examples of a rare skin condition and having it correctly classify new cases — critical for rare diseases where data is scarce.'},
+  {id:'t17',name:'In-context learning',sess:'s2',color:'#639922',def:'The ability of a language model to solve a task by being provided examples and instructions directly in the input, without retraining.',ex:'"Sort these diagnoses into acute vs chronic: MI, hypertension, appendicitis, diabetes" — the model solves this without additional training.'},
+  {id:'t18',name:'Transfer learning',sess:'s2',color:'#639922',def:'Using knowledge learned from one task to improve performance on another related task. Pre-trained models are fine-tuned on new datasets.',ex:'A model pre-trained on ImageNet (millions of general images) fine-tuned on retinal photographs — faster and more accurate than training from scratch.'},
+  {id:'t19',name:'Federated learning',sess:'s2',color:'#639922',def:'The model is trained locally on each device/institution using its own data, and only model updates (not patient data) are shared with a central server. Addresses privacy concerns.',ex:'Three Malaysian hospitals training a shared sepsis prediction model without sharing patient records — each updates the model locally.'},
+  {id:'t20',name:'Distributed training / Model parallelism',sess:'s2',color:'#639922',def:'Distributed training parallelises the training process across multiple machines, enabling faster model convergence. Model parallelism splits the model across machines for very large models.',ex:'Training GPT-4 required thousands of GPUs running in parallel for weeks — not feasible for most clinical AI projects, but relevant context for understanding costs.'},
+  {id:'t21',name:'Retrieval-Augmented Generation (RAG)',sess:'s2',color:'#639922',def:'Combines retrieval and generation: a retriever finds relevant information from an external database, and a generator uses both the query and retrieved information to produce a more accurate response.',ex:'An AI clinical guideline assistant that retrieves relevant MOH protocols from a document store before generating its recommendation — reducing hallucination.'},
+  {id:'t22',name:'Natural language processing (NLP)',sess:'s1',color:'#185FA5',def:'A subfield of AI and linguistics enabling computers to understand, interpret, and generate human language. Used in text analysis, sentiment analysis, machine translation, and chatbots.',ex:'Extracting diagnoses and medications from free-text clinical notes. Summarising discharge letters. Generating patient-facing explanations of medical terms.'},
+  {id:'t23',name:'Large language model (LLM)',sess:'s1',color:'#185FA5',def:'Generative AI that allows computers to understand and generate language content similar to humans (e.g. GPT-4o, Gemini Pro, Claude).',ex:'ChatGPT, Claude, Gemini. Used clinically for documentation, patient education, guideline summarisation, and research assistance.'},
+  {id:'t24',name:'Computer vision',sess:'s1',color:'#185FA5',def:'AI that enables computers to interpret and analyse visual information from images or videos. Used in image recognition, object detection, facial recognition, and medical imaging analysis.',ex:'AI reading chest X-rays, detecting diabetic retinopathy in fundus photos, identifying cancerous lesions in histopathology slides.'},
+  {id:'t25',name:'Data preprocessing',sess:'s2',color:'#639922',def:'Preparing and cleaning raw data for ML algorithms: data cleaning, removing duplicates, handling missing values and outliers, feature selection, normalisation, addressing class imbalance, protecting data privacy.',ex:'Before training a sepsis model: imputing missing lactate values, normalising vital signs to the same scale, ensuring equal representation of sepsis and non-sepsis cases in the training set.'},
+  {id:'t26',name:'Model training',sess:'s2',color:'#639922',def:'Initialising random values for model parameters, then adjusting those values based on comparison between model predictions and actual outputs. Repeated many times; each iteration is a training step.',ex:'The process of a neural network progressively improving its ECG interpretation accuracy over thousands of training iterations.'},
+  {id:'t27',name:'Backpropagation',sess:'s2',color:'#639922',def:'A technique used by ML models to learn from their mistakes. After making predictions, the model calculates the difference between predictions and actual results (errors), then adjusts internal parameters to perform better.',ex:'Like a medical student who reviews their incorrect diagnosis, identifies the reasoning error, and adjusts their clinical thinking for next time.'},
+  {id:'t28',name:'Stochastic Gradient Descent (SGD)',sess:'s2',color:'#639922',def:'A method that helps the model find the best settings by making small, step-by-step adjustments to minimise errors. "Stochastic" = uses a random subset of data at each step, which speeds up learning.',ex:'Think of it as finding the lowest point in a hilly landscape by taking small downhill steps — but with some randomness in which direction you step.'},
+  {id:'t29',name:'Model evaluation',sess:'s3',color:'#BA7517',def:'Assessing the performance of ML models on unseen data to determine how well they generalise. Common metrics: accuracy, precision, recall (sensitivity), F1 score, AUC-ROC.',ex:'After training a model to detect TB on chest X-rays, you test it on 1,000 new X-rays it has never seen — measuring how often it correctly identifies TB cases and non-cases.'},
+  {id:'t30',name:'Hyperparameter tuning',sess:'s3',color:'#BA7517',def:'Improving models by adjusting hyperparameters (learning rate, batch size, number of layers, neurons per layer, regularisation) set before training. Techniques: grid search, random search, Bayesian optimisation.',ex:'Adjusting the number of hidden layers in a neural network to find the configuration that gives the best validation accuracy without overfitting.'},
+  {id:'t31',name:'Instruction tuning',sess:'s2',color:'#639922',def:'Training a model to follow natural language instructions better. Fine-tuning a model so it responds appropriately to specific task descriptions.',ex:'"Explain this diagnosis in plain language for a patient with low health literacy" — instruction tuning makes the model reliably follow this kind of guidance.'},
+  {id:'t32',name:'Fine tuning',sess:'s2',color:'#639922',def:'Further training a pre-trained AI model on specific data for a particular task. A general language model fine-tuned on legal documents becomes more effective at legal queries.',ex:'A general medical LLM fine-tuned on Malaysian clinical practice guidelines — more likely to reference local protocols than international ones.'},
+  {id:'t33',name:'Reinforcement Fine-Tuning',sess:'s2',color:'#639922',def:'Refining a pre-trained model using reinforcement learning to improve task-specific performance. The model learns through feedback (rewards/penalties). Uses techniques like RLHF (Reinforcement Learning from Human Feedback).',ex:'ChatGPT\'s conversational quality was significantly improved using RLHF — humans rated responses, and the model learned to produce more helpful answers.'},
+  {id:'t34',name:'Temperature',sess:'s2',color:'#639922',def:'A setting controlling how creative or random a model\'s responses are. Low temperature (e.g. 0.1) = more predictable, factual responses. High temperature (e.g. 1.0) = more diverse and creative.',ex:'For clinical documentation, use low temperature. For brainstorming research hypotheses, higher temperature may be appropriate.'},
+  {id:'t35',name:'Top-k sampling',sess:'s2',color:'#639922',def:'Limits the number of possible responses the model considers to the k most likely options. Helps maintain some randomness while avoiding chaotic outputs.',ex:'Setting k=5 means the model only considers the 5 most probable next words — avoiding wild hallucinations while maintaining some variation.'},
+  {id:'t36',name:'Top-p sampling (nucleus sampling)',sess:'s2',color:'#639922',def:'Selects responses whose combined probabilities add up to a threshold (e.g. 0.9) instead of a fixed number. More dynamic than top-k.',ex:'At p=0.9, the model considers only the most likely responses until their probabilities sum to 90% — balancing diversity and relevance.'},
+  {id:'t37',name:'Maximum token limit',sess:'s2',color:'#639922',def:'Sets a cap on the length of the model\'s response, measured in tokens (roughly words or word fragments). Controls response length and cost.',ex:'Setting a limit of 200 tokens for a patient education paragraph keeps responses concise and readable.'},
+  {id:'t38',name:'Context length',sess:'s2',color:'#639922',def:'How much input the model can consider when generating a response. Longer context = better understanding of complex situations and follow-up questions.',ex:'A model with a short context window may "forget" earlier parts of a long consultation summary. Longer context models are better for complex case histories.'},
+  {id:'t39',name:'Repetition penalty',sess:'s2',color:'#639922',def:'Discourages the model from repeating words or phrases. Reduces the likelihood of the model getting stuck in repetitive loops.',ex:'Without this, some models might produce clinical summaries that repeat the chief complaint multiple times.'},
+  {id:'t40',name:'Diversity penalty',sess:'s2',color:'#639922',def:'Encourages the model to produce varied outputs by penalising responses similar to what has already been generated.',ex:'Useful for brainstorming differential diagnoses — ensures the model generates genuinely distinct possibilities rather than slight variations.'},
+  {id:'t41',name:'Information leakage',sess:'s2',color:'#639922',def:'When information not available under real-world circumstances is used to train the model. Causes unrealistically good performance on evaluation metrics. Related: data leakage, temporal leakage, target leakage.',ex:'Normalising data across the entire dataset before splitting into train/test sets is a common form of leakage — the model has already "seen" information from the test set.'},
+  {id:'t42',name:'Overfitting and underfitting',sess:'s3',color:'#BA7517',def:'Overfitting: model memorises training data, performs poorly on new data (too complex). Underfitting: model fails to capture underlying patterns, high bias (too simple). Regularisation, dropout, and hyperparameter tuning help find the balance.',ex:'An overfitted sepsis model achieves 99% accuracy on training data but only 60% on new patients. An underfitted model misses patterns entirely.'},
+  {id:'t43',name:'Black boxes',sess:'s3',color:'#BA7517',def:'AI systems where we cannot easily see or understand how they decide. Deep neural networks are often described as black boxes — opaque at multiple layers. Critical concern in healthcare where transparency is essential.',ex:'A DL model predicting cancer risk may be highly accurate but unable to explain which features drove its decision — making it difficult for clinicians to trust or audit.'},
+  {id:'t44',name:'Interpretability',sess:'s3',color:'#BA7517',def:'How easy it is to understand the model itself. A linear regression model with explicit coefficients is highly interpretable. A deep neural network is not.',ex:'A logistic regression model predicting 30-day readmission is interpretable: you can see exactly how much each variable (age, comorbidities, prior admissions) contributes.'},
+  {id:'t45',name:'Explainability',sess:'s3',color:'#BA7517',def:'The ability to explain the rationale behind a model\'s specific predictions or decisions in a transparent and understandable manner. Allows humans to understand not just HOW but WHY a model makes certain decisions.',ex:'An AI predicting stroke risk explains: "This patient\'s risk is elevated primarily due to age (45%), atrial fibrillation (30%), and uncontrolled hypertension (25%)."'},
+  {id:'t46',name:'Transparency in AI (SHAP, LIME, Grad-CAM)',sess:'s3',color:'#BA7517',def:'Approaches to overcome the black box: SHAP (Shapley Additive Explanations) — how much each feature influenced the prediction. LIME (Local Interpretable Model-agnostic Explanations) — what mattered for one specific case. Grad-CAM — highlights image regions the AI focused on. Feature Importance Analysis. Saliency Maps. Counterfactual Explanations. Rule-Based Explanations. Surrogate Models.',ex:'Grad-CAM on a pneumonia X-ray classifier highlights the consolidation region — confirming the AI is "looking at" clinically relevant areas, not an artefact.'},
+  {id:'t47',name:'AI guardrails',sess:'s3',color:'#BA7517',def:'Technical constraints implemented in AI applications to maintain ethical and safe operations. Involve fine-tuning models and applying front or backend filters to prevent unintended or harmful outputs.',ex:'A clinical AI tool with a guardrail that refuses to recommend medication doses above a specified safety threshold, regardless of what the model calculates.'},
+  {id:'t48',name:'Algorithmic audits',sess:'s3',color:'#BA7517',def:'Evaluating algorithms for fairness, transparency, accountability, and ethical considerations. Examines decision-making processes, outputs, and impacts to ensure alignment with goals and to identify and mitigate risks and biases.',ex:'An annual audit of a triage AI tool checking whether average wait times differ significantly across ethnic groups — and investigating if they do.'},
+  {id:'t49',name:'AI red-teaming',sess:'s3',color:'#BA7517',def:'Structured testing to find flaws and vulnerabilities in an AI system, often performed by dedicated "red teams" using adversarial methods to identify harmful outputs, unforeseen behaviours, limitations, or misuse risks.',ex:'Deliberately trying to make a clinical AI chatbot give dangerous advice by using misleading prompts — before deploying it to patients.'},
+  {id:'t50',name:'Scalability',sess:'s4',color:'#534AB7',def:'The ability of a system to handle increasing demands by adding resources without significantly impacting performance. Vertical scalability: upgrading hardware. Horizontal scalability: adding more nodes. Elastic scalability: dynamic resource adjustment.',ex:'A radiology AI that handles 100 scans per day needs elastic scalability to handle 10,000 scans per day during a pandemic surge.'},
+  {id:'t51',name:'Elasticity',sess:'s4',color:'#534AB7',def:'The ability of a system to automatically adjust resource capacity in real-time based on workload demands. On-demand provisioning. Auto-scaling. Resource pooling.',ex:'A hospital AI system that automatically spins up additional compute resources during peak morning rounds and scales down overnight.'},
+  {id:'t52',name:'AI/ML Stack',sess:'s4',color:'#534AB7',def:'A hierarchically-integrated architecture for AI/ML software systems. Layers from data input management at the lower level, progressing to model selection, error estimation, decision support delivery, and end-user interfacing. Includes embedding and integration with healthcare systems and full model lifecycle support.',ex:'The full stack for a clinical documentation AI: EMR integration layer → NLP model layer → post-processing → clinician dashboard → monitoring and logging.'},
+  {id:'t53',name:'AI/ML Pipelines and Platforms',sess:'s4',color:'#534AB7',def:'Pipelines are sets of tools and processes carrying out tasks step-by-step: data preparation, algorithm selection, model training, prediction. Platforms provide a complete environment for building, testing, and maintaining AI/ML models.',ex:'A data pipeline that automatically ingests new patient records, preprocesses them, runs them through the trained model, and outputs risk scores to a clinical dashboard.'},
+  {id:'t54',name:'Sandboxing',sess:'s3',color:'#BA7517',def:'Safe pre-deployment testing of an AI/ML tool in real-life settings without directly or indirectly affecting critical care decisions. Ensures integration aspects (data access) and validates prospective performance and risk management.',ex:'Running a sepsis prediction model in "shadow mode" alongside clinical care for 3 months — it generates predictions, but clinicians do not act on them, allowing performance assessment without risk.'},
+  {id:'t55',name:'Prompt',sess:'s1',color:'#185FA5',def:'The input or question you give to an AI model to get a response.',ex:'"Summarise the key clinical priorities for this patient with heart failure and CKD" is a prompt.'},
+  {id:'t56',name:'Prompt engineering',sess:'s1',color:'#185FA5',def:'The practice of designing input text (prompts) to guide an AI model to produce the desired response. A critical clinical skill for getting reliable, useful outputs from general-purpose LLMs.',ex:'"You are an experienced family physician. Summarise the following patient history in 3 bullet points, highlighting the most urgent clinical issues." — more specific prompts produce better outputs.'},
+  {id:'t57',name:'Chain-of-thought prompting',sess:'s1',color:'#185FA5',def:'A technique where the model is prompted to explain its reasoning step by step before giving an answer. Improves performance on complex clinical reasoning tasks.',ex:'"Think through this case step by step before giving your differential diagnosis" — the model\'s intermediate reasoning can often be audited for clinical coherence.'},
+  {id:'t58',name:'Hallucination',sess:'s3',color:'#BA7517',def:'When an AI model generates information that seems plausible but is not true or real. A critical safety concern in clinical contexts where false confidence can cause patient harm.',ex:'An AI assistant citing a non-existent clinical guideline, or inventing a drug interaction, with complete apparent confidence.'},
+  {id:'t59',name:'Confabulation',sess:'s3',color:'#BA7517',def:'Similar to hallucination, but specifically when the AI generates fabricated information that sounds like a genuine fact. The model fills in gaps in its knowledge with plausible-sounding but false information.',ex:'Confidently stating that "a 2023 Cochrane review found X" when no such review exists.'},
+  {id:'t60',name:'Edge computing and On-device ML',sess:'s4',color:'#534AB7',def:'Running machine learning models locally on devices (smartphones, IoT devices, edge servers) rather than in the cloud. Reduces latency and protects data privacy. Enabled by model compression, quantisation, and knowledge distillation.',ex:'A wearable ECG device that detects arrhythmias locally without sending data to a cloud server — relevant for resource-limited settings and privacy-sensitive applications.'},
+  {id:'t61',name:'Digital twin',sess:'s4',color:'#534AB7',def:'A virtual model that accurately replicates the physical characteristics and behaviours of a real-world object, system, or process. Uses data from sensors, IoT devices, and other sources to simulate and analyse performance in real-time.',ex:'A virtual model of a surgical patient with their anatomy, genomic data, and real-time physiological data — enabling pre-operative simulation and intraoperative guidance (the 5 Is: Individualised, Interconnected, Interactive, Informative, Impactful).'},
+  {id:'t62',name:"Moore's Law",sess:'s4',color:'#534AB7',def:"The observation that the number of transistors on a microchip doubles approximately every two years, leading to doubling of computing power while decreasing costs. Explains why AI has become practically feasible in healthcare.",ex:"The computing power required to train a modern medical imaging AI would have cost millions in 2010 and thousands today. This trajectory continues."},
+  {id:'t63',name:"Eroom's Law",sess:'s4',color:'#534AB7',def:"Moore's Law spelled backwards: the phenomenon of declining efficiency and increasing costs in drug discovery over time. Despite more R&D investment, fewer new drugs are approved per billion dollars spent.",ex:"AI drug discovery is one proposed solution to Eroom's Law — using AI to identify drug candidates faster and more cheaply than traditional methods."},
+  {id:'t64',name:'AI Ecosystem',sess:'s4',color:'#534AB7',def:'The ecosystem for successful AI systems comprises 8 interconnected components: data quality and availability, technology infrastructure, talent and expertise, regulatory and ethical frameworks, industry collaboration, market demand and investment, user adoption and feedback loop, and risk management and resilience.',ex:"A hospital that deploys AI without staff training (missing: user adoption) or incident reporting pathways (missing: risk management) has an incomplete ecosystem — and failures are inevitable."},
+  {id:'t65',name:'Alert fatigue',sess:'s4',color:'#534AB7',def:'A state of desensitisation or reduced responsiveness caused by exposure to an excessive number of alerts, alarms, or notifications. One of the most common and dangerous failure modes of clinical AI deployment.',ex:'A sepsis AI that alerts on 40% of ICU patients becomes useless — nurses stop acting on it. High sensitivity without appropriate alert design creates more harm than good.'}
+];
+
+/* ── RENDER GLOSSARY ─────────────────────────── */
+let activeFilter = 'all';
+function renderGlossary(query=''){
+  const q = query.toLowerCase().trim();
+  const list = document.getElementById('glossary-list');
+  list.innerHTML='';
+  terms.forEach(t=>{
+    const matchFilter = activeFilter==='all' || t.sess===activeFilter;
+    const matchQuery = !q || t.name.toLowerCase().includes(q) || t.def.toLowerCase().includes(q) || t.ex.toLowerCase().includes(q);
+    const div = document.createElement('div');
+    div.className='gterm'+((!matchFilter||!matchQuery)?' hidden-term':'');
+    div.innerHTML=`
+      <div class="gterm-head" onclick="toggleTerm(this)">
+        <span class="gterm-name">${t.name}</span>
+        <span class="gterm-badge" style="background:${t.color}22;color:${t.color};">${t.sess.toUpperCase()}</span>
+      </div>
+      <div class="gterm-body">
+        ${t.def}
+        <div class="gterm-example"><em>Example:</em> ${t.ex}</div>
+      </div>`;
+    list.appendChild(div);
+  });
+}
+function toggleTerm(head){
+  head.nextElementSibling.classList.toggle('open');
+}
+function filterGlossary(){
+  renderGlossary(document.getElementById('gSearch').value);
+}
+function setFilter(f,el){
+  activeFilter=f;
+  document.querySelectorAll('.gfil').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on');
+  renderGlossary(document.getElementById('gSearch').value);
+}
+renderGlossary();
+
+/* ── QUIZ ─────────────────────────────────── */
+function answer(el,qid,result){
+  document.querySelectorAll('#'+qid+' .quiz-opt').forEach(o=>{o.classList.add('disabled','dimmed')});
+  el.classList.remove('dimmed');
+  if(result==='correct'){
+    el.classList.add('correct');
+    el.querySelector('.opt-icon').textContent='✓';
+    document.getElementById(qid+'-fb-correct').classList.add('show');
+  }else{
+    el.classList.add('incorrect');
+    el.querySelector('.opt-icon').textContent='✕';
+    document.getElementById(qid+'-fb-incorrect').classList.add('show');
+  }
+  const r=document.getElementById(qid+'-reset');
+  if(r){r.style.display='block'}
+}
+function resetQuiz(qid){
+  document.querySelectorAll('#'+qid+' .quiz-opt').forEach(o=>{
+    o.classList.remove('disabled','dimmed','correct','incorrect');
+    o.querySelector('.opt-icon').textContent='';
+  });
+  document.getElementById(qid+'-fb-correct').classList.remove('show');
+  document.getElementById(qid+'-fb-incorrect').classList.remove('show');
+  const r=document.getElementById(qid+'-reset');
+  if(r){r.style.display='none'}
+}
+
+/* ── 9-STEP CYCLE ─────────────────────────── */
+function toggleStep(btn,id){
+  const detail=document.getElementById(id);
+  const isOpen=detail.classList.contains('open');
+  document.querySelectorAll('.step-detail').forEach(d=>d.classList.remove('open'));
+  document.querySelectorAll('.step-btn').forEach(b=>b.classList.remove('active'));
+  if(!isOpen){
+    detail.classList.add('open');
+    btn.classList.add('active');
+    detail.scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+}
+
+/* ── PROGRESS BAR ─────────────────────────── */
+window.addEventListener('scroll',()=>{
+  const doc=document.documentElement;
+  const scrolled=doc.scrollTop;
+  const total=doc.scrollHeight-doc.clientHeight;
+  document.getElementById('progress-bar').style.width=(scrolled/total*100)+'%';
+  document.getElementById('btt').classList.toggle('show',scrolled>400);
+});
+
+/* ── ACTIVE NAV ───────────────────────────── */
+const secs=['overview','session1','session2','session3','session4','glossary','resources','mystory'];
+const navLinks=document.querySelectorAll('.nav-links a');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(a=>a.classList.remove('active'));
+      const active=document.querySelector('.nav-links a[href="#'+e.target.id+'"]');
+      if(active)active.classList.add('active');
+    }
+  });
+},{rootMargin:'-40% 0px -55% 0px'});
+secs.forEach(id=>{const el=document.getElementById(id);if(el)obs.observe(el)});
+</script>
+</body>
+</html>
