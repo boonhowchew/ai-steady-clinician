@@ -232,11 +232,34 @@ h3.blk{font-family:var(--font-sans);font-size:0.72rem;font-weight:600;letter-spa
   section{padding:2rem 0}
   .hero-title{font-size:1.7rem}
 }
+
+/* ── PILOT REGISTRATION BANNER ─────────────── */
+#pilot-banner{background:linear-gradient(135deg,#0F6E56 0%,#185FA5 100%);color:#fff;padding:0.7rem 1.25rem;text-align:center;font-size:0.82rem;line-height:1.6;position:relative;z-index:50}
+#pilot-banner strong{font-weight:600}
+#pilot-banner a.pb-btn{display:inline-block;margin-left:0.75rem;background:#fff;color:#0F6E56;font-weight:600;font-size:0.75rem;padding:0.25rem 0.9rem;border-radius:20px;text-decoration:none;transition:background .15s,color .15s}
+#pilot-banner a.pb-btn:hover{background:#E1F5EE;color:#063d2c}
+/* ── COMPLETION SECTION ─────────────────────── */
+#complete{padding:2.5rem 0;background:linear-gradient(135deg,#F0FAF6 0%,#F0F6FD 100%);border-top:2px solid #1D9E75}
+.complete-inner{max-width:740px;margin:0 auto;padding:0 1.25rem}
+.complete-title{font-family:'DM Serif Display',Georgia,serif;font-size:1.5rem;color:#0F6E56;margin-bottom:0.5rem}
+.complete-sub{font-size:0.875rem;color:#6B6B67;margin-bottom:1.25rem;line-height:1.7}
+.complete-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0.6rem;margin-bottom:1.25rem}
+.cs{background:#fff;border:1px solid rgba(15,110,86,0.2);border-radius:10px;padding:0.8rem 1rem}
+.cs-num{font-size:0.65rem;font-weight:700;color:#0F6E56;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:3px}
+.cs-text{font-size:0.8rem;color:#3D3D3A;line-height:1.55}
+.complete-btn{display:inline-block;background:#0F6E56;color:#fff;font-weight:600;font-size:0.875rem;padding:0.75rem 2rem;border-radius:10px;text-decoration:none;transition:background .15s;margin-right:0.75rem}
+.complete-btn:hover{background:#063d2c;color:#fff}
+.complete-note{font-size:0.75rem;color:#9C9A92;margin-top:0.75rem;line-height:1.6}
+
 </style>
 </head>
 <body>
 
 <div id="progress-bar"></div>
+<div id="pilot-banner">
+  🎓 <strong>Pilot Study:</strong> Register your participation and receive a Certificate of Completion.
+  <a href="https://forms.gle/bhx9gpAubEhaY5x1A" target="_blank" rel="noopener" class="pb-btn">Register now ↗</a>
+</div>
 
 <nav id="topnav">
   <div class="nav-inner">
@@ -829,6 +852,31 @@ h3.blk{font-family:var(--font-sans);font-size:0.72rem;font-weight:600;letter-spa
   </div>
 </section>
 
+
+<section id="complete">
+  <div class="complete-inner">
+    <div class="complete-title">Completed the programme?</div>
+    <div class="complete-sub">
+      If you have worked through all 4 sessions (~5 hours), you are ready to claim your Certificate of Completion.
+      The form below takes about 5 minutes. You will receive your personalised certificate by email within 60 seconds of submitting.
+    </div>
+    <div class="complete-steps">
+      <div class="cs"><div class="cs-num">Session 1</div><div class="cs-text">Session 1 — Why AI? Problems, teams &amp; levels</div></div>
+<div class="cs"><div class="cs-num">Session 2</div><div class="cs-text">Session 2 — Data, infrastructure &amp; building the model</div></div>
+<div class="cs"><div class="cs-num">Session 3</div><div class="cs-text">Session 3 — Validating, evaluating &amp; registering a tool</div></div>
+<div class="cs"><div class="cs-num">Session 4</div><div class="cs-text">Session 4 — Deployment, monitoring &amp; the AI ecosystem</div></div>
+    </div>
+    <a href="https://forms.gle/zXUEeLKCd89MsTBB8" target="_blank" rel="noopener" class="complete-btn">
+      Claim my certificate ↗
+    </a>
+    <div class="complete-note">
+      You will be asked to confirm completion of each session, provide a brief reflection (2–3 sentences),
+      and declare that you engaged honestly with all sessions. Your certificate will include a unique
+      Certificate ID that can be verified and added to your CPD portfolio or LinkedIn profile.<br><br>
+      Questions? Contact <a href="mailto:chewboonhow@upm.edu.my" style="color:#0F6E56;">chewboonhow@upm.edu.my</a>
+    </div>
+  </div>
+</section>
 <footer id="footer">
   <strong>AI-Steady Clinician</strong> · second in a three-part series<br>
   Designed and facilitated by <strong>Prof. Dr. Boon-How Chew</strong><br>
