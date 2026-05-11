@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<!-- Google Analytics — replace G-PG5J8HC528 with your Measurement ID -->
+<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-PG5J8HC528"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -38,9 +38,9 @@
   --teal:       #1D9E75;
   --teal-dark:  #0F6E56;
   --teal-light: #E1F5EE;
-  --ink:        #1A1A18;
-  --ink-2:      #3D3D3A;
-  --ink-3:      #6B6B67;
+  --ink:        #0D0D0C;
+  --ink-2:      #222220;
+  --ink-3:      #4A4A46;
   --ink-4:      #9C9A92;
   --surface:    #F8F9FA;
   --surface-2:  #F1F0EB;
@@ -49,10 +49,10 @@
   --font-sans:  'DM Sans', system-ui, sans-serif;
   --r:          10px;
   --r-lg:       16px;
-  --max:        740px;
+  --max:        760px;
 }
 html{scroll-behavior:smooth;font-size:16px}
-body{font-family:var(--font-sans);background:var(--surface);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-sans);background-color:var(--surface);background-image:radial-gradient(ellipse 130% 45% at 50% -5%, rgba(24,95,165,0.06) 0%, transparent 65%);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
 a{color:var(--blue-dark);text-decoration:underline;text-underline-offset:3px}
 a:hover{color:var(--blue)}
 
@@ -82,9 +82,20 @@ section+section{border-top:1px solid var(--border)}
 .s-arr{font-size:11px;color:var(--ink-4)}
 
 /* HERO */
-#hero{padding:3.5rem 0 2.75rem;background:linear-gradient(155deg,var(--blue-dark) 0%,#0a3560 100%);border-bottom:none}
+#hero{padding:3.5rem 0 2.75rem;background:var(--blue-dark);position:relative;overflow:hidden;border-bottom:none}
+
+/* Animated mesh background — blue palette */
+#hero .hero-mesh{position:absolute;inset:0;background:radial-gradient(ellipse 80% 65% at 15% 30%, rgba(24,95,165,0.55) 0%, transparent 60%),radial-gradient(ellipse 60% 75% at 85% 70%, rgba(8,40,80,0.6) 0%, transparent 55%),radial-gradient(ellipse 50% 40% at 60% 5%, rgba(133,183,235,0.14) 0%, transparent 50%);animation:meshShift 12s ease-in-out infinite alternate}
+
+/* Grid lines overlay */
+#hero .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);background-size:60px 60px}
+
+/* Keep hero content above mesh layers */
+#hero .wrap{position:relative;z-index:2}
+
+@keyframes meshShift{0%{opacity:0.75;transform:scale(1)}100%{opacity:1;transform:scale(1.05)}}
 .hero-kicker{font-size:0.68rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#85B7EB;margin-bottom:1rem}
-.hero-title{font-family:var(--font-serif);font-size:clamp(1.9rem,5.5vw,2.8rem);line-height:1.15;color:#fff;margin-bottom:1.1rem}
+.hero-title{font-family:var(--font-serif);font-size:clamp(2rem,5.5vw,3.2rem);line-height:1.1;color:#fff;margin-bottom:1.1rem;white-space:nowrap}
 .hero-title em{font-style:italic;color:#85B7EB}
 .hero-sub{font-size:0.9rem;color:rgba(255,255,255,0.78);max-width:530px;margin-bottom:1.75rem;line-height:1.75}
 .hero-meta{display:flex;flex-wrap:wrap;gap:0.65rem}
@@ -107,8 +118,8 @@ section+section{border-top:1px solid var(--border)}
 
 /* SECTION HEADERS */
 .sess-eyebrow{font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.45rem}
-.sess-title{font-family:var(--font-serif);font-size:clamp(1.4rem,3.5vw,1.9rem);line-height:1.2;margin-bottom:0.65rem}
-.sess-desc{font-size:0.875rem;color:var(--ink-3);max-width:550px}
+.sess-title{font-family:var(--font-serif);font-size:clamp(1.45rem,3.5vw,1.9rem);line-height:1.2;margin-bottom:0.65rem}
+.sess-desc{font-size:0.875rem;color:var(--ink-3)}
 .sess-meta{display:flex;gap:0.45rem;flex-wrap:wrap;margin-top:0.875rem}
 .tag{font-size:0.68rem;font-weight:500;padding:0.22rem 0.65rem;border-radius:20px;border:1px solid currentColor}
 
@@ -130,7 +141,7 @@ section+section{border-top:1px solid var(--border)}
 .card-title{font-weight:600;font-size:0.875rem;margin-bottom:0.35rem;color:var(--ink)}
 .card-body{font-size:0.83rem;color:var(--ink-3);line-height:1.65}
 
-h3.blk{font-family:var(--font-sans);font-size:0.72rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-4);margin:1.6rem 0 0.7rem}
+h3.blk{font-family:var(--font-sans);font-size:1rem;font-weight:700;letter-spacing:0;color:var(--ink);margin:1.6rem 0 0.7rem}
 
 .list-clean{list-style:none;padding:0}
 .list-clean li{font-size:0.85rem;color:var(--ink-2);padding:0.4rem 0 0.4rem 1.2rem;position:relative;border-bottom:1px solid var(--border)}
@@ -141,6 +152,18 @@ h3.blk{font-family:var(--font-sans);font-size:0.72rem;font-weight:600;letter-spa
 .l-amber li::before{background:var(--amber)}
 .l-coral li::before{background:var(--coral)}
 .l-purple li::before{background:var(--purple)}
+
+/* ── TAKEAWAY BOXES ───────────────────────────── */
+.tk-box{border-radius:var(--r-lg);padding:1.2rem 1.4rem 0.75rem;margin-top:1.25rem}
+.tk-box h3{margin-top:0!important;margin-bottom:0.6rem}
+.tk-blue  {background:#EBF3FD;border-left:4px solid var(--blue)}
+.tk-purple{background:#EEEDFE;border-left:4px solid var(--purple)}
+.tk-list{list-style:none;padding:0;margin:0}
+.tk-list li{display:block;position:relative;padding:0.5rem 0 0.5rem 2.2rem;border-bottom:1px solid rgba(0,0,0,0.06);font-size:0.9rem;color:var(--ink-2);line-height:1.7}
+.tk-list li:last-child{border-bottom:none;padding-bottom:0.1rem}
+.tk-num{position:absolute;left:0;top:0.55rem;min-width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-sans);font-size:0.68rem;font-weight:700;color:#fff}
+.tk-blue   .tk-num{background:var(--blue-dark)}
+.tk-purple .tk-num{background:var(--purple-dark)}
 
 /* 9-STEP CYCLE — interactive */
 .cycle-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:1rem 0}
@@ -187,7 +210,9 @@ h3.blk{font-family:var(--font-sans);font-size:0.72rem;font-weight:600;letter-spa
 .glossary-filter{display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:1.1rem}
 .gfil{font-size:0.7rem;font-weight:500;padding:0.22rem 0.7rem;border-radius:20px;border:1px solid var(--border);cursor:pointer;background:var(--surface);color:var(--ink-3);transition:all .15s}
 .gfil:hover,.gfil.on{background:var(--blue-dark);color:#fff;border-color:var(--blue-dark)}
-.gterm{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:0.75rem 0.9rem;margin-bottom:0.5rem}
+#glossary-list{display:grid;grid-template-columns:repeat(2,1fr);gap:0.5rem;align-items:start}
+@media(max-width:520px){#glossary-list{grid-template-columns:1fr}}
+.gterm{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:0.75rem 0.9rem}
 .gterm-head{display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;cursor:pointer}
 .gterm-name{font-size:0.875rem;font-weight:600;color:var(--ink)}
 .gterm-badge{font-size:0.62rem;font-weight:600;padding:1px 7px;border-radius:4px;flex-shrink:0;margin-top:2px}
@@ -230,7 +255,7 @@ h3.blk{font-family:var(--font-sans);font-size:0.72rem;font-weight:600;letter-spa
 @media(max-width:480px){
   .nav-links a{font-size:0.68rem;padding:0.22rem 0.42rem}
   section{padding:2rem 0}
-  .hero-title{font-size:1.7rem}
+  .hero-title{font-size:1.7rem;white-space:normal}
 }
 
 /* ── PILOT REGISTRATION BANNER ─────────────── */
@@ -240,10 +265,11 @@ h3.blk{font-family:var(--font-sans);font-size:0.72rem;font-weight:600;letter-spa
 #pilot-banner a.pb-btn:hover{background:#E1F5EE;color:#063d2c}
 /* ── COMPLETION SECTION ─────────────────────── */
 #complete{padding:2.5rem 0;background:linear-gradient(135deg,#F0FAF6 0%,#F0F6FD 100%);border-top:2px solid #1D9E75}
-.complete-inner{max-width:740px;margin:0 auto;padding:0 1.25rem}
+.complete-inner{max-width:760px;margin:0 auto;padding:0 1.25rem}
 .complete-title{font-family:'DM Serif Display',Georgia,serif;font-size:1.5rem;color:#0F6E56;margin-bottom:0.5rem}
 .complete-sub{font-size:0.875rem;color:#6B6B67;margin-bottom:1.25rem;line-height:1.7}
-.complete-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0.6rem;margin-bottom:1.25rem}
+.complete-steps{display:grid;grid-template-columns:repeat(2,1fr);gap:0.6rem;margin-bottom:1.25rem}
+@media(max-width:420px){.complete-steps{grid-template-columns:1fr}}
 .cs{background:#fff;border:1px solid rgba(15,110,86,0.2);border-radius:10px;padding:0.8rem 1rem}
 .cs-num{font-size:0.65rem;font-weight:700;color:#0F6E56;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:3px}
 .cs-text{font-size:0.8rem;color:#3D3D3A;line-height:1.55}
@@ -275,6 +301,8 @@ h3.blk{font-family:var(--font-sans);font-size:0.72rem;font-weight:600;letter-spa
 
 <!-- HERO -->
 <section id="hero" style="border-top:none;">
+  <div class="hero-mesh"></div>
+  <div class="hero-grid"></div>
   <div class="wrap">
     <div class="series-bar">
       <a href="https://boonhowchew.github.io/ai-ready-clinician/" target="_blank" rel="noopener" class="sp s-done" style="text-decoration:none;">AI-Ready Clinician ✓</a>
@@ -284,7 +312,7 @@ h3.blk{font-family:var(--font-sans);font-size:0.72rem;font-weight:600;letter-spa
       <a href="https://boonhowchew.github.io/ai-savvy-clinician/" target="_blank" rel="noopener" class="sp s-next" style="text-decoration:none;">AI-Savvy Clinician</a>
     </div>
     <p class="hero-kicker">A clinician-led learning programme · second in a three-part series</p>
-    <h1 class="hero-title">AI-Steady<br><em>Clinician</em></h1>
+    <h1 class="hero-title">AI-Steady <em>Clinician</em></h1>
     <p class="hero-sub">From clinical problem identification to deployment and monitoring — the full 9-step AI development lifecycle, explained for clinicians who want to co-design, evaluate, and advocate. No coding required.</p>
     <div class="hero-meta">
       <span class="hero-pill">4 sessions · ~5 hrs total</span>
@@ -449,6 +477,45 @@ h3.blk{font-family:var(--font-sans);font-size:0.72rem;font-weight:600;letter-spa
         <span class="clinician-tag">Clinician as advocate</span>
       </div>
     </div>
+    <div style="font-size:0.85rem;color:var(--ink-3);margin:1.5rem 0 0.75rem;line-height:1.65;">
+      Across all 9 steps, the clinician's role is not passive. You are the problem-owner, the domain expert, the data guardian, the evaluator, and the monitor — the person who ensures that what is built is clinically meaningful, safe, and equitable. The strip below highlights the six core responsibilities that run through every step of the cycle.
+    </div>
+
+    <style>
+      /* Clinician role strip — scoped to AI-Steady */
+      .cr-strip { background:#0C447C; border-radius:var(--r-lg); overflow:hidden; display:grid; grid-template-columns:auto 1fr; align-items:stretch; box-shadow:0 2px 16px rgba(12,68,124,0.18); margin-bottom:0.25rem; }
+      .cr-label { color:#fff; font-family:var(--font-serif); font-size:1rem; line-height:1.25; white-space:nowrap; border-right:1px solid rgba(255,255,255,0.18); padding:1.1rem 1.1rem 1.1rem 1.25rem; display:flex; flex-direction:column; justify-content:center; }
+      .cr-label span { display:block; font-family:var(--font-sans); font-size:0.6rem; font-weight:600; text-transform:uppercase; letter-spacing:0.12em; color:rgba(255,255,255,0.45); margin-bottom:0.3rem; }
+      .cr-items { display:grid; grid-template-columns:repeat(6,1fr); gap:0; }
+      .cr-item { display:flex; flex-direction:column; gap:0.3rem; padding:0.85rem 0.7rem; border-right:1px solid rgba(255,255,255,0.1); }
+      .cr-item:last-child { border-right:none; }
+      .cr-icon { font-size:1.15rem; line-height:1; }
+      .cr-text { font-size:0.67rem; color:rgba(255,255,255,0.85); line-height:1.5; }
+      @media(max-width:600px) {
+        .cr-strip { grid-template-columns:1fr; }
+        .cr-label { border-right:none; border-bottom:1px solid rgba(255,255,255,0.18); white-space:normal; }
+        .cr-items { grid-template-columns:repeat(2,1fr); }
+        .cr-item { border-bottom:1px solid rgba(255,255,255,0.1); }
+      }
+    </style>
+
+    <div class="cr-strip">
+      <div class="cr-label">
+        <span>Your role</span>
+        The clinician's<br>role is crucial
+      </div>
+      <div class="cr-items">
+        <div class="cr-item"><div class="cr-icon">🎯</div><div class="cr-text">Define the right clinical problem.</div></div>
+        <div class="cr-item"><div class="cr-icon">📊</div><div class="cr-text">Understand the data and how the tool was trained or built.</div></div>
+        <div class="cr-item"><div class="cr-icon">🔍</div><div class="cr-text">Evaluate evidence, validation, and real-world performance.</div></div>
+        <div class="cr-item"><div class="cr-icon">⚖️</div><div class="cr-text">Monitor for safety, fairness, bias, and unintended consequences.</div></div>
+        <div class="cr-item"><div class="cr-icon">🔐</div><div class="cr-text">Ensure privacy, security, and regulatory compliance.</div></div>
+        <div class="cr-item"><div class="cr-icon">🤝</div><div class="cr-text">Maintain human accountability and shared decision-making.</div></div>
+      </div>
+    </div>
+
+    <p style="font-size:0.78rem;color:var(--ink-4);font-style:italic;margin-top:0.6rem;line-height:1.6;">These responsibilities do not sit outside the 9-step cycle — they run through every step of it. Explore each step above to see where clinician involvement is most critical.</p>
+
   </div>
 </section>
 
@@ -456,7 +523,7 @@ h3.blk{font-family:var(--font-sans);font-size:0.72rem;font-weight:600;letter-spa
 <section id="session1">
   <div class="wrap">
     <p class="sess-eyebrow" style="color:var(--blue);">Session 1 · 75 min · Discussion-led</p>
-    <h2 class="sess-title">Why AI? Identifying clinical problems<br>and building the right team</h2>
+    <h2 class="sess-title">Why AI? Identifying clinical problems and building the right team</h2>
     <p class="sess-desc">Understand what kinds of problems are genuinely suitable for AI, what different levels of AI use look like, and what role you play in the development team.</p>
     <div class="sess-meta">
       <span class="tag" style="color:var(--blue-dark);border-color:var(--blue-light);">Steps 1 &amp; 2</span>
@@ -529,7 +596,7 @@ h3.blk{font-family:var(--font-sans);font-size:0.72rem;font-weight:600;letter-spa
 <section id="session2">
   <div class="wrap">
     <p class="sess-eyebrow" style="color:var(--green-mid);">Session 2 · 75 min · Concept + case-based</p>
-    <h2 class="sess-title">Data, infrastructure<br>and building the model</h2>
+    <h2 class="sess-title">Data, infrastructure and building the model</h2>
     <p class="sess-desc">What makes clinical data suitable, how annotation and labelling works, what infrastructure means in practice, and how to critically assess the foundations of any AI tool.</p>
     <div class="sess-meta">
       <span class="tag" style="color:var(--green);border-color:var(--green-light);">Steps 3, 4 &amp; 5</span>
@@ -602,7 +669,7 @@ h3.blk{font-family:var(--font-sans);font-size:0.72rem;font-weight:600;letter-spa
 <section id="session3">
   <div class="wrap">
     <p class="sess-eyebrow" style="color:var(--amber);">Session 3 · 75 min · Framework-focused</p>
-    <h2 class="sess-title">Validating, evaluating<br>and registering an AI tool</h2>
+    <h2 class="sess-title">Validating, evaluating and registering an AI tool</h2>
     <p class="sess-desc">The metrics clinicians must understand, the frameworks that govern AI reporting, and the registration pathways — including what is and isn't under regulatory control in Malaysia and globally.</p>
     <div class="sess-meta">
       <span class="tag" style="color:var(--amber-dark);border-color:var(--amber-light);">Steps 6 &amp; 7</span>
@@ -683,7 +750,7 @@ h3.blk{font-family:var(--font-sans);font-size:0.72rem;font-weight:600;letter-spa
 <section id="session4">
   <div class="wrap">
     <p class="sess-eyebrow" style="color:var(--purple);">Session 4 · 75 min · Governance capstone</p>
-    <h2 class="sess-title">Deployment, monitoring<br>and the AI ecosystem</h2>
+    <h2 class="sess-title">Deployment, monitoring and the AI ecosystem</h2>
     <p class="sess-desc">How AI tools enter clinical workflows, why models degrade, and what clinicians and administrators must do to maintain safe, effective, equitable AI in their institutions.</p>
     <div class="sess-meta">
       <span class="tag" style="color:var(--purple-dark);border-color:var(--purple-light);">Steps 8 &amp; 9</span>
@@ -745,14 +812,16 @@ h3.blk{font-family:var(--font-sans);font-size:0.72rem;font-weight:600;letter-spa
       </div>
     </div>
 
-    <h3 class="blk">Programme closing takeaways</h3>
-    <ul class="list-clean l-purple">
-      <li>AI tool development is a <strong>cyclical 9-step process</strong> — clinician involvement is required at every step, not just at the end.</li>
-      <li>The most important thing a clinician brings to AI development is <strong>domain expertise, clinical judgement, and accountability</strong> — none of which can be automated.</li>
-      <li>Understanding this process helps you <strong>codesign, evaluate, monitor, and regulate</strong> AI tools more effectively than any clinician who remains uninformed.</li>
-      <li>Appropriate AI in healthcare is <strong>ethical, clinically validated, and seamlessly integrated</strong> — all three conditions must be met, not just one.</li>
-      <li><em>"AI only enhances who you already are, or wanted to be."</em> — the question is whether you build the skills to direct it.</li>
-    </ul>
+    <div class="tk-box tk-blue">
+      <h3 class="blk">Programme closing takeaways</h3>
+      <ul class="tk-list">
+        <li><span class="tk-num">1</span>AI tool development is a <strong>cyclical 9-step process</strong> — clinician involvement is required at every step, not just at the end.</li>
+        <li><span class="tk-num">2</span>The most important thing a clinician brings to AI development is <strong>domain expertise, clinical judgement, and accountability</strong> — none of which can be automated.</li>
+        <li><span class="tk-num">3</span>Understanding this process helps you <strong>codesign, evaluate, monitor, and regulate</strong> AI tools more effectively than any clinician who remains uninformed.</li>
+        <li><span class="tk-num">4</span>Appropriate AI in healthcare is <strong>ethical, clinically validated, and seamlessly integrated</strong> — all three conditions must be met, not just one.</li>
+        <li><span class="tk-num">5</span><em>"AI only enhances who you already are, or wanted to be."</em> — the question is whether you build the skills to direct it.</li>
+      </ul>
+    </div>
   </div>
 </section>
 
