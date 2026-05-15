@@ -277,6 +277,19 @@ h3.blk{font-family:var(--font-sans);font-size:1rem;font-weight:700;letter-spacin
 .complete-btn:hover{background:#063d2c;color:#fff}
 .complete-note{font-size:0.75rem;color:#9C9A92;margin-top:0.75rem;line-height:1.6}
 
+
+/* ── Footer programme navigation beside certificate button ── */
+.complete-actions{display:flex;flex-wrap:wrap;gap:0.55rem;align-items:center;margin-top:0.25rem;margin-bottom:0.75rem}
+.complete-actions .complete-btn{margin-right:0}
+.complete-nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:0.3rem;font-size:0.76rem;font-weight:700;padding:0.62rem 0.95rem;border-radius:999px;text-decoration:none!important;background:#fff;color:var(--ink-2)!important;border:1px solid rgba(26,26,24,0.12);box-shadow:0 2px 8px rgba(0,0,0,0.04);transition:transform .15s,background .15s,color .15s,border-color .15s}
+.complete-nav-btn:hover{transform:translateY(-1px);background:var(--surface-2);color:var(--ink)!important;text-decoration:none!important}
+.complete-nav-btn.idx{background:#111827;color:#fff!important;border-color:#111827}
+.complete-nav-btn.ready{background:#E1F5EE;color:#0F6E56!important;border-color:rgba(15,110,86,0.25)}
+.complete-nav-btn.steady{background:#E6F1FB;color:#0C447C!important;border-color:rgba(24,95,165,0.25)}
+.complete-nav-btn.savvy{background:#FEF3C7;color:#92650A!important;border-color:rgba(200,146,42,0.28)}
+.protected-email{font-weight:600;letter-spacing:.01em}
+@media(max-width:520px){.complete-actions{flex-direction:column;align-items:stretch}.complete-actions .complete-btn,.complete-nav-btn{width:100%;text-align:center}}
+
 </style>
 </head>
 <body>
@@ -931,14 +944,20 @@ h3.blk{font-family:var(--font-sans);font-size:1rem;font-weight:700;letter-spacin
 <div class="cs"><div class="cs-num">Session 3</div><div class="cs-text">Session 3 — Validating, evaluating &amp; registering a tool</div></div>
 <div class="cs"><div class="cs-num">Session 4</div><div class="cs-text">Session 4 — Deployment, monitoring &amp; the AI ecosystem</div></div>
     </div>
+    <div class="complete-actions">
     <a href="https://forms.gle/zXUEeLKCd89MsTBB8" target="_blank" rel="noopener" class="complete-btn">
       Claim my certificate ↗
     </a>
+      <a class="complete-nav-btn idx" href="https://boonhowchew.github.io/ai-clinician-programme/">Programme Index</a>
+      <a class="complete-nav-btn ready" href="https://boonhowchew.github.io/ai-ready-clinician/">AI-Ready</a>
+      <a class="complete-nav-btn steady" href="https://boonhowchew.github.io/ai-steady-clinician/">AI-Steady</a>
+      <a class="complete-nav-btn savvy" href="https://boonhowchew.github.io/ai-savvy-clinician/">AI-Savvy</a>
+    </div>
     <div class="complete-note">
       You will be asked to confirm completion of each session, provide a brief reflection (2–3 sentences),
       and declare that you engaged honestly with all sessions. Your certificate will include a unique
       Certificate ID that can be verified and added to your CPD portfolio or LinkedIn profile.<br><br>
-      Questions? Contact <a href="mailto:chewboonhow@upm.edu.my" style="color:#0F6E56;">chewboonhow@upm.edu.my</a>
+      Questions? Contact <span class="protected-email" style="color:#0F6E56;">chewboonhow [at] upm [dot] edu [dot] my</span>
     </div>
   </div>
 </section>
