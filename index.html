@@ -290,6 +290,58 @@ h3.blk{font-family:var(--font-sans);font-size:1rem;font-weight:700;letter-spacin
 .protected-email{font-weight:600;letter-spacing:.01em}
 @media(max-width:520px){.complete-actions{flex-direction:column;align-items:stretch}.complete-actions .complete-btn,.complete-nav-btn{width:100%;text-align:center}}
 
+/* REPORTING FRAMEWORK LIST */
+.rf-tag{display:inline-block;font-size:0.59rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:1px 6px;border-radius:3px;margin-left:4px;vertical-align:middle;position:relative;top:-1px}
+.rf-rep{background:var(--amber-light);color:var(--amber-dark)}
+.rf-tech{background:var(--purple-light);color:var(--purple-dark)}
+.rf-desc{display:block;font-size:0.78rem;color:var(--ink-3);margin-top:0.2rem;line-height:1.55}
+.rf-group{font-size:0.65rem;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;margin:1rem 0 0.45rem;padding-bottom:0.2rem;border-bottom:1px dashed var(--border);color:var(--ink-3)}
+
+/* MODEL CARD SECTION */
+.mc-section{background:linear-gradient(160deg,var(--blue-light) 0%,var(--blue-pale) 100%);border:1px solid rgba(24,95,165,0.22);border-top:4px solid var(--blue);border-radius:var(--r-lg);padding:1.5rem 1.6rem;margin:1.7rem 0;box-shadow:0 4px 20px rgba(24,95,165,0.08)}
+.mc-eyebrow{font-size:0.63rem;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--blue);margin-bottom:0.4rem}
+.mc-title{font-family:var(--font-serif);font-size:1.15rem;color:var(--blue-dark);margin-bottom:0.8rem;line-height:1.2}
+.mc-intro{font-size:0.85rem;color:var(--ink-2);line-height:1.75;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid rgba(24,95,165,0.18)}
+.mc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.55rem;margin-bottom:1rem}
+@media(max-width:560px){.mc-grid{grid-template-columns:1fr}}
+.mc-card{background:#fff;border:1px solid rgba(24,95,165,0.18);border-radius:var(--r);padding:0.8rem 1rem 0.8rem 3rem;position:relative;box-shadow:0 1px 5px rgba(24,95,165,0.07);transition:box-shadow .18s,border-color .18s}
+.mc-card:hover{box-shadow:0 4px 14px rgba(24,95,165,0.14);border-color:rgba(24,95,165,0.35)}
+.mc-num{position:absolute;left:0.8rem;top:0.8rem;width:22px;height:22px;border-radius:50%;background:var(--blue-dark);color:#fff;font-size:0.6rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.mc-card-title{font-weight:600;font-size:0.875rem;color:var(--blue-dark);margin-bottom:0.3rem}
+.mc-card-body{font-size:0.82rem;color:var(--ink-2);line-height:1.65}
+.mc-footer{background:var(--blue-dark);border-radius:var(--r);padding:1.05rem 1.2rem;color:#fff;font-size:0.84rem;line-height:1.8}
+.mc-footer-title{font-weight:700;font-size:0.7rem;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:0.35rem;color:rgba(255,255,255,0.6)}
+.mc-footer a{color:#85B7EB;text-underline-offset:2px}
+
+/* EXPANDABLE METRIC PANELS */
+.mexp-wrap{margin:1.1rem 0 0.6rem}
+.mexp-intro{font-size:0.83rem;color:var(--ink-2);margin-bottom:0.75rem;line-height:1.7;border-left:3px solid var(--amber-light);padding-left:0.75rem}
+.mexp-head{display:flex;justify-content:space-between;align-items:center;padding:0.65rem 1rem;cursor:pointer;background:var(--amber-light);border:1px solid rgba(186,117,23,0.28);border-radius:var(--r);color:var(--amber-dark);font-weight:600;font-size:0.83rem;transition:background .15s;user-select:none;margin-top:0.45rem}
+.mexp-head:hover{background:#f0d89a}
+.mexp-head.open{border-radius:var(--r) var(--r) 0 0;background:#eacf82;border-bottom-color:transparent}
+.mexp-arrow{font-size:0.75rem;transition:transform .22s;color:var(--amber-dark)}
+.mexp-head.open .mexp-arrow{transform:rotate(180deg)}
+.mexp-body{display:none;border:1px solid rgba(186,117,23,0.28);border-top:none;border-radius:0 0 var(--r) var(--r);background:#fff;padding:0.9rem 1rem}
+.mexp-body.open{display:block}
+.mexp-group-label{font-size:0.65rem;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--amber-dark);margin:1rem 0 0.4rem;padding-bottom:0.25rem;border-bottom:1px dashed rgba(186,117,23,0.3)}
+.mexp-group-label:first-child{margin-top:0}
+.mexp-sub{font-size:0.74rem;color:var(--ink-3);margin-bottom:0.5rem}
+.mexp-tbl{width:100%;border-collapse:collapse;font-size:0.79rem;margin-bottom:0.35rem}
+.mexp-tbl thead tr{background:var(--surface)}
+.mexp-tbl th{font-size:0.63rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--ink-3);padding:0.3rem 0.6rem;text-align:left;border-bottom:1px solid var(--border)}
+.mexp-tbl td{padding:0.42rem 0.6rem;vertical-align:top;line-height:1.6;border-top:1px solid var(--border);color:var(--ink-2)}
+.mexp-tbl td:first-child{font-weight:600;color:var(--amber-dark);width:22%}
+.mexp-tbl td:nth-child(2){color:var(--ink-3);font-size:0.73rem;width:14%;white-space:nowrap}
+.mexp-tbl td:last-child{font-size:0.78rem}
+.mexp-tbl-wrap{overflow-x:auto}
+.ql-tbl{width:100%;border-collapse:collapse;font-size:0.79rem}
+.ql-tbl thead tr{background:var(--surface)}
+.ql-tbl th{font-size:0.63rem;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--ink-3);padding:0.3rem 0.6rem;text-align:left;border-bottom:1px solid var(--border)}
+.ql-tbl td{padding:0.42rem 0.6rem;vertical-align:top;line-height:1.6;border-top:1px solid var(--border);color:var(--ink-2)}
+.ql-tbl td:first-child{font-weight:600;color:var(--amber-dark);width:22%}
+.ql-tbl td:nth-child(2){color:var(--ink-3);font-size:0.73rem;width:16%}
+.ql-tbl td:last-child{font-size:0.78rem}
+
 </style>
 </head>
 <body>
@@ -704,21 +756,223 @@ h3.blk{font-family:var(--font-sans);font-size:1rem;font-weight:700;letter-spacin
     <div class="card"><div class="card-title">Calibration</div><div class="card-body">Does a predicted 70% risk actually correspond to 70% of patients having the outcome? A well-calibrated model is essential for clinical decision-making. Most papers report AUC without calibration — ask for it.</div></div>
     <div class="card"><div class="card-title">Subgroup performance &amp; fairness</div><div class="card-body">Does the model perform equally well across age groups, ethnic groups, and comorbidities? AI trained predominantly on non-local populations may perform worse for your patients. Always ask: who was in the training data?</div></div>
 
+    <div class="mexp-wrap">
+      <h3 class="blk" style="margin-top:0">More Evaluation Metrics</h3>
+      <p class="mexp-intro">Validate AI models against predefined metrics and criteria to ensure they align with project requirements and objectives. For internal validation, preferred approaches include resampling methods such as bootstrapping and cross-validation. If alternative methods are used — such as randomly splitting a single sample into training, tuning, and test sets — provide a clear explanation or justification. The accuracy and precision metrics, quantitative and qualitative, may include but are not limited to the following.</p>
+
+      <!-- QUANTITATIVE -->
+      <div class="mexp-head" onclick="toggleMexp(this,'mq')">
+        <span>Quantitative Metrics</span>
+        <span class="mexp-arrow">▾</span>
+      </div>
+      <div class="mexp-body" id="mq">
+        <p class="mexp-sub">Note: Sensitivity, Specificity, and ROC-AUC are covered in the must-have metrics above. All metrics below apply to classification models unless otherwise indicated.</p>
+
+        <div class="mexp-group-label">Classification &amp; Prediction</div>
+        <div class="mexp-tbl-wrap">
+        <table class="mexp-tbl">
+          <thead><tr><th>Metric</th><th>Score range</th><th>What clinicians need to know</th></tr></thead>
+          <tbody>
+            <tr><td>Precision (PPV)</td><td>0 – 1 ↑ better</td><td>Proportion of model-positive results that are truly positive. High precision = fewer false positives. Critical when a false positive triggers a harmful or costly intervention.</td></tr>
+            <tr><td>F1 Score</td><td>0 – 1 ↑ better</td><td>Harmonic mean of precision and recall. Preferred over accuracy when classes are imbalanced — common in clinical datasets where disease is rare. A balanced indicator of overall classification quality.</td></tr>
+            <tr><td>Precision-Recall AUC</td><td>0 – 1 ↑ better</td><td>Plots precision against recall across all thresholds. More informative than ROC-AUC when the positive class is rare (e.g. rare diseases, sepsis in low-acuity settings). Demand this alongside ROC-AUC for imbalanced datasets.</td></tr>
+            <tr><td>Confusion Matrix</td><td>Not a single score</td><td>A 2×2 table showing true positives, false positives, true negatives, and false negatives. Not a metric in itself, but the foundation from which all classification metrics are derived. Ask to see it — a good AUC can still hide a clinically unacceptable false-negative rate.</td></tr>
+            <tr><td>Logarithmic Loss</td><td>0 = perfect ↓ better</td><td>Measures how close probabilistic predictions are to actual outcomes. Penalises overconfident wrong predictions. Relevant when the model outputs a risk probability (e.g. 73% likelihood of readmission) rather than a binary label.</td></tr>
+            <tr><td>Cohen's Kappa</td><td>−1 to 1 ↑ better (0 = chance)</td><td>Agreement between model predictions and ground truth, corrected for chance. Useful when evaluating AI against clinician-labelled data. Values above 0.6 are generally considered substantial agreement.</td></tr>
+            <tr><td>Matthews Correlation Coefficient (MCC)</td><td>−1 to 1 ↑ better (0 = no correlation)</td><td>Accounts for all four cells of the confusion matrix. More robust than accuracy or F1 when classes are very imbalanced. Considered one of the most informative single-number summaries of a binary classifier.</td></tr>
+            <tr><td>Dice Coefficient</td><td>0 – 1 ↑ better</td><td>Measures overlap between two sets — particularly important for image segmentation tasks (e.g. tumour boundary delineation, organ segmentation in radiology AI). A Dice score below 0.7 in a segmentation model warrants scrutiny.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="mexp-group-label">Regression (Continuous Outcome Prediction)</div>
+        <p class="mexp-sub">Used when the model predicts a continuous value — e.g. length of stay, HbA1c, or drug dose.</p>
+        <div class="mexp-tbl-wrap">
+        <table class="mexp-tbl">
+          <thead><tr><th>Metric</th><th>Score range</th><th>What clinicians need to know</th></tr></thead>
+          <tbody>
+            <tr><td>Mean Absolute Error (MAE)</td><td>0 = perfect ↓ better</td><td>Average magnitude of prediction errors in the original units. Treats all errors equally. Interpretable: an MAE of 1.2 days for length-of-stay prediction means predictions are off by 1.2 days on average.</td></tr>
+            <tr><td>Mean Squared Error (MSE)</td><td>0 = perfect ↓ better</td><td>Like MAE but squares errors, penalising large deviations more heavily. Sensitive to outliers. Useful when large errors are clinically more harmful than small ones (e.g. dosing models).</td></tr>
+            <tr><td>R-squared (R²)</td><td>0 – 1 ↑ better (negative = poor fit)</td><td>Proportion of outcome variance explained by the model. R² of 0.8 means the model explains 80% of the variation. Low or negative values indicate the model performs worse than simply predicting the mean.</td></tr>
+            <tr><td>Mean Absolute Percentage Error (MAPE)</td><td>0% = perfect ↓ better</td><td>Expresses prediction error as a percentage of the true value. Useful for interpretability — a MAPE of 12% is easy to communicate. Sensitive to near-zero values; use with caution in clinical contexts where the true value can approach zero.</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="mexp-group-label">Text &amp; NLP (LLM Evaluation)</div>
+        <p class="mexp-sub">Used when evaluating AI-generated clinical text — discharge summaries, differential diagnoses, patient-facing explanations, or translation.</p>
+        <div class="mexp-tbl-wrap">
+        <table class="mexp-tbl">
+          <thead><tr><th>Metric</th><th>Score range</th><th>What clinicians need to know</th></tr></thead>
+          <tbody>
+            <tr><td>BLEU</td><td>0 – 1 ↑ better</td><td>Measures how many word sequences (n-grams) in the AI-generated text appear in a reference text. Originally designed for machine translation. A high BLEU score indicates surface-level similarity but does not guarantee clinical accuracy or safety.</td></tr>
+            <tr><td>ROUGE</td><td>0 – 1 ↑ better</td><td>Designed for text summarisation. Measures recall — how much of the reference content appears in the AI output. Common in evaluating AI-generated clinical summaries. ROUGE-L (longest common subsequence) is the most useful variant for clinical text.</td></tr>
+            <tr><td>METEOR</td><td>0 – 1 ↑ better</td><td>Evaluates translation and generation quality with more linguistic nuance than BLEU, incorporating synonymy and stemming. Emphasises recall. More aligned with how clinicians judge paraphrased content.</td></tr>
+            <tr><td>BERT-Score</td><td>0 – 1 ↑ better</td><td>Uses deep language model embeddings to measure semantic similarity between AI-generated and reference text. Captures meaning beyond exact word matching — two sentences with different words but the same clinical meaning will score highly. The most clinically meaningful of the NLP metrics listed here.</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <!-- QUALITATIVE -->
+      <div class="mexp-head" onclick="toggleMexp(this,'mql')">
+        <span>Qualitative Metrics</span>
+        <span class="mexp-arrow">▾</span>
+      </div>
+      <div class="mexp-body" id="mql">
+        <p class="mexp-sub">There is currently no gold-standard evaluation method for qualitative metrics. They are typically measured on a Likert scale from 1 (Strongly disagree) to 5 (Strongly agree), and are especially important when evaluating LLMs and generative AI tools used in clinical settings.</p>
+        <table class="ql-tbl">
+          <thead><tr><th>Metric</th><th>How measured</th><th>What it evaluates</th></tr></thead>
+          <tbody>
+            <tr><td>Safety</td><td>Likert 1–5</td><td>The degree of hallucination — whether the AI generates false, fabricated, or dangerously incorrect clinical information. The most critical qualitative metric for any clinical AI tool. A single confident hallucination in a clinical context can cause patient harm.</td></tr>
+            <tr><td>Consensus &amp; Context</td><td>Likert 1–5</td><td>Whether the response is aligned with current clinical evidence, professional consensus, and the specific clinical context of the query. A response can be factually plausible but out of step with local guidelines or current practice — clinician reviewers must assess this.</td></tr>
+            <tr><td>Objectivity</td><td>Likert 1–5</td><td>Whether the response is unbiased with respect to clinical conditions, devices, therapies, or patient demographics. Evaluates whether the AI favours particular brands, treatment modalities, or patient groups without clinical justification.</td></tr>
+            <tr><td>Reproducibility</td><td>Likert 1–5</td><td>The contextual consistency of responses when the same question is asked repeatedly. High-stakes clinical AI tools should produce consistent answers to identical queries. High variability in outputs signals model instability and is a safety concern.</td></tr>
+            <tr><td>Explainability</td><td>Likert 1–5</td><td>The quality of the AI's justification — whether it provides interpretable reasoning, transparent logic, and appropriate supplementary information. Clinicians should be able to understand <em>why</em> an output was produced, not just what it says.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
     <div class="callout callout-amber">
       <div class="callout-title">The transparency toolkit — overcoming the black box</div>
       SHAP (Shapley Additive Explanations) — how much each clinical variable influenced the prediction. LIME (Local Interpretable Model-agnostic Explanations) — why the AI made this specific decision for this patient. Grad-CAM — highlights which regions of a medical image the AI focused on. Clinicians should demand these tools for any AI used in high-stakes decisions.
     </div>
 
-    <h3 class="blk">Reporting frameworks — a quick reference</h3>
+    <h3 class="blk">Reporting frameworks &amp; technical checklists — a quick reference</h3>
+    <div class="prose" style="margin-bottom:0.6rem"><p>These frameworks guide how AI studies are reported, evaluated, and assessed for trustworthiness. Note that some are study design-specific (TRIPOD-AI for prediction models, STARD-AI for diagnostic accuracy, CONSORT/SPIRIT-AI for clinical trials), stage-specific (DECIDE-AI for early-phase studies), or discipline-specific (CHEERS-AI for health economics, IDEAL for surgery, CLAIM and FUTURE-AI for medical imaging).</p></div>
+
+    <p class="rf-group">Reporting guidelines</p>
     <ul class="list-clean l-amber">
-      <li><strong>TRIPOD+AI</strong> — 27-item checklist for prediction model development and validation <a href="https://doi.org/10.1136/bmj-2023-078378" target="_blank" rel="noopener">↗</a></li>
-      <li><strong>CONSORT-AI</strong> — 14 new items for clinical trials with AI components <a href="https://doi.org/10.1038/s41591-020-1034-x" target="_blank" rel="noopener">↗</a></li>
-      <li><strong>SPIRIT-AI</strong> — 15 new items for clinical trial protocols with AI <a href="https://doi.org/10.1038/s41591-020-1037-7" target="_blank" rel="noopener">↗</a></li>
-      <li><strong>DECIDE-AI</strong> — for early-stage clinical studies of AI decision support systems <a href="https://doi.org/10.1038/s41591-022-01772-9" target="_blank" rel="noopener">↗</a></li>
-      <li><strong>MI-CLAIM</strong> — minimum information for clinical AI modelling, enabling fairness and bias assessment <a href="https://doi.org/10.1038/s41591-020-1041-y" target="_blank" rel="noopener">↗</a></li>
-      <li><strong>APPRAISE-AI</strong> — evaluates quality of AI studies across 6 domains; 24 items, maximum 100 points <a href="https://doi.org/10.1001/jamanetworkopen.2023.35377" target="_blank" rel="noopener">↗</a></li>
-      <li><strong>OPTICA tool</strong> — 13-chapter organisational checklist for AI solutions adoption in health care <a href="https://doi.org/10.1056/AIcs2300269" target="_blank" rel="noopener">↗</a></li>
+      <li>
+        <strong>TRIPOD / TRIPOD-AI</strong><span class="rf-tag rf-rep">Reporting</span> — transparent reporting of multivariable prediction models, extended for supervised ML methods. <a href="https://doi.org/10.1136/bmj-2023-078378" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">TRIPOD provides 22 essential items for prediction model reporting; TRIPOD-AI extends these for ML techniques. Applicable to both model development and validation studies — note these are reporting tools, not quality appraisal instruments.</span>
+      </li>
+      <li>
+        <strong>PROBAST / PROBAST-AI</strong><span class="rf-tag rf-rep">Reporting</span> — risk of bias and applicability assessment for prediction model studies. <a href="https://doi.org/10.1136/bmj-2024-082505" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">Covers four domains — participants, predictors, outcome, and analysis — with up to 20 signalling questions. PROBAST-AI updates this for ML methods, with separate components for model development (16 questions) and model evaluation (18 questions).</span>
+      </li>
+      <li>
+        <strong>CONSORT-AI</strong><span class="rf-tag rf-rep">Reporting</span> — reporting standard for completed clinical trials involving AI interventions. <a href="https://doi.org/10.1136/bmj.m3164" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">Extends CONSORT 2010 with 14 new items requiring clear descriptions of the AI intervention, handling of inputs and outputs, integration setting, human–AI interaction, and analysis of error cases.</span>
+      </li>
+      <li>
+        <strong>SPIRIT-AI</strong><span class="rf-tag rf-rep">Reporting</span> — reporting standard for clinical trial <em>protocols</em> that include an AI intervention. <a href="https://doi.org/10.1038/s41591-020-1037-7" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">Extends the core SPIRIT 2013 protocol standard with 15 new AI-specific items covering AI component descriptions, skills required for use, data handling, and human–AI interaction requirements. Applied before the trial begins, unlike CONSORT-AI which is used at reporting.</span>
+      </li>
+      <li>
+        <strong>DECIDE-AI</strong><span class="rf-tag rf-rep">Reporting</span> — for early-stage clinical studies of AI-driven decision support systems. <a href="https://doi.org/10.1038/s41591-022-01772-9" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">Covers 17 AI-specific reporting items (with 28 subitems) focused on human–AI interaction and augmented intelligence, addressing the developmental evaluation phase before full clinical validation. Complements study-level guidelines by specifically targeting early exploratory clinical investigations.</span>
+      </li>
+      <li>
+        <strong>STARD-AI</strong><span class="rf-tag rf-rep">Reporting</span> — reporting standard for diagnostic accuracy studies involving AI. <a href="https://doi.org/10.1038/s41591-025-03953-8" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">Extends STARD 2015 with 18 new AI-specific items (total 40), addressing dataset practices, model evaluation, algorithmic bias, and fairness. Designed to help readers assess the generalisability, applicability, and bias risk of AI diagnostic test study findings.</span>
+      </li>
+      <li>
+        <strong>MI-CLAIM</strong><span class="rf-tag rf-rep">Reporting</span> — minimum information for transparent reporting of the AI algorithm itself. <a href="https://doi.org/10.1038/s41591-020-1041-y" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">Covers six areas: study design, data partitions, model optimisation, performance evaluation, model examination (bias and sanity checks), and reproducible code sharing. Complements study-level guidelines such as CONSORT-AI and TRIPOD-AI by providing detail on the algorithm's construction rather than the trial design.</span>
+      </li>
+      <li>
+        <strong>MINIMAR</strong><span class="rf-tag rf-rep">Reporting</span> — minimum information needed to understand AI predictions, target populations, and hidden biases. <a href="https://doi.org/10.1093/jamia/ocaa088" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">Covers four sections: training data population, training data demographics, model architecture and development, and model evaluation and validation. Designed to support local model optimisation and enable replication and resource sharing. Overlaps with MI-CLAIM with both focusing on AI algorithm development and validation.</span>
+      </li>
+      <li>
+        <strong>CLAIM</strong><span class="rf-tag rf-rep">Reporting</span> — reporting checklist for AI applications in medical imaging. <a href="https://doi.org/10.1148/ryai.2020200029" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">Modelled on STARD and extended to cover classification, image reconstruction, text analysis, and workflow optimisation in medical imaging contexts. Specifically intended for radiology and medical imaging AI research reporting.</span>
+      </li>
+      <li>
+        <strong>CODE-EHR</strong><span class="rf-tag rf-rep">Reporting</span> — minimum standards for studies using structured electronic health record data. <a href="https://doi.org/10.1016/S2589-7500(22)00151-0" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">Defines minimum and preferred standards across five areas: coding and dataset construction, transparency of that process, disease and outcome definitions, analysis, and research governance including patient engagement. Best applied in the study design phase before data access begins.</span>
+      </li>
+      <li>
+        <strong>CHEERS-AI</strong><span class="rf-tag rf-rep">Reporting</span> — reporting standard for health economic evaluations of AI interventions. <a href="https://doi.org/10.1016/j.jval.2024.05.006" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">Extends the CHEERS 2022 standard to include AI-specific considerations, supporting reporting of cost-effectiveness analyses of AI interventions. Essential when assessing whether an AI tool provides value for money relative to current clinical practice.</span>
+      </li>
+      <li>
+        <strong>IDEAL / IDEAL-D</strong><span class="rf-tag rf-rep">Reporting</span> — evaluation framework for surgical and device innovation across five developmental stages. <a href="https://doi.org/10.1097/SLA.0000000000004180" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">Defines the stages of Innovation, Development, Exploration, Assessment, and Long-term follow-up, each with key research questions for transparent reporting. The IDEAL-D extension covers the preclinical development stage, and the framework can be applied prospectively to plan studies and retrospectively to appraise them.</span>
+      </li>
     </ul>
+
+    <p class="rf-group" style="color:var(--purple-dark);border-bottom-color:var(--purple-light);margin-top:1.1rem">Technical &amp; assessment frameworks</p>
+    <ul class="list-clean l-purple">
+      <li>
+        <strong>APPRAISE-AI</strong><span class="rf-tag rf-tech">Technical</span> — quality assessment tool for AI studies in medicine, scoring across 6 domains. <a href="https://doi.org/10.1001/jamanetworkopen.2023.35377" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">Evaluates clinical relevance, data quality, methodological conduct, robustness of results, reporting quality, and reproducibility across 24 items with a maximum total score of 100 points. A practical tool for appraising study quality before adopting a clinical AI tool.</span>
+      </li>
+      <li>
+        <strong>AIPA</strong><span class="rf-tag rf-tech">Technical</span> — comprehensive six-phase guideline for AI tool development, validation, and implementation in healthcare. <a href="https://doi.org/10.17605/OSF.IO/TNRJZ" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">Covers the full AI tool lifecycle: data collection and management, model development, validation, software development, impact assessment, and clinical implementation with monitoring. Specifically designed for diagnostic and prognostic AI applications in healthcare.</span>
+      </li>
+      <li>
+        <strong>FUTURE-AI</strong><span class="rf-tag rf-tech">Technical</span> — 55-question trustworthiness checklist for AI in medical imaging across 6 principles. <a href="https://doi.org/10.48550/ARXIV.2109.09658" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">The six guiding principles are Fairness, Universality, Traceability, Usability, Robustness, and Explainability. Designed for developers, evaluators, and stakeholders to ensure imaging AI is trustworthy and optimised for real-world clinical practice.</span>
+      </li>
+      <li>
+        <strong>ALTAI</strong><span class="rf-tag rf-tech">Technical</span> — EU trustworthiness assessment list for AI systems; 7 requirements, 60 questions. <a href="https://ec.europa.eu/futurium/en/ai-alliance-consultation.1.html" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">Provided by the European Commission's High-Level Expert Group on AI, covering human agency and oversight, technical robustness and safety, privacy and data governance, transparency, fairness, societal and environmental well-being, and accountability. Relevant for any institution operating within or procuring from the EU AI regulatory environment.</span>
+      </li>
+      <li>
+        <strong>Medical Algorithmic Audit</strong><span class="rf-tag rf-tech">Technical</span> — structured five-phase audit framework for identifying errors and bias in deployed medical algorithms. <a href="https://doi.org/10.1016/S2589-7500(22)00003-6" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">Phases cover scoping, stakeholder and risk mapping, artifact collection, testing (including subgroup and adversarial testing), and reflection with risk mitigation recommendations. Provides distinct actions for both developers and clinical users at each stage of the audit process.</span>
+      </li>
+      <li>
+        <strong>SUDO</strong><span class="rf-tag rf-tech">Technical</span> — framework for identifying unreliable AI predictions and assessing algorithmic bias without ground-truth labels. <a href="https://doi.org/10.1038/s41467-024-46000-9" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">Uses pseudo-labelling and classifier training to detect class contamination and evaluate performance discrepancies in AI outputs. Particularly valuable for post-deployment evaluation in clinical settings where labelled validation data is unavailable.</span>
+      </li>
+      <li>
+        <strong>FURM</strong><span class="rf-tag rf-tech">Technical</span> — Stanford Health Care's three-stage assessment for Fair, Useful, and Reliable clinical AI. <a href="https://doi.org/10.48550/ARXIV.2403.07911" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">Each stage addresses "what and why" (ethical review and use case motivation), "how" (model formulation, evaluation, and workflow integration), and implementation impact (financial, IT feasibility, deployment, and monitoring). Designed as an institutional procurement and pre-deployment decision mechanism.</span>
+      </li>
+      <li>
+        <strong>OPTICA</strong><span class="rf-tag rf-tech">Technical</span> — 13-chapter organisational checklist for evaluating and adopting AI in healthcare settings. <a href="https://doi.org/10.1056/AIcs2300269" target="_blank" rel="noopener">↗</a>
+        <span class="rf-desc">Engages five key stakeholder groups and provides end-to-end practical guidance across clinical, operational, governance, and technical dimensions. Designed for healthcare organisations assessing AI solutions for procurement or institutional deployment.</span>
+      </li>
+    </ul>
+
+    <div class="mc-section">
+      <p class="mc-eyebrow">Essential vendor due diligence</p>
+      <h3 class="mc-title">Model cards — what to demand from any AI vendor</h3>
+      <p class="mc-intro">A model card is a short standardised document that accompanies an AI model, transparently describing what it does, how it was built, and where it may fail. First proposed by Mitchell et al. (Google, 2019), model cards are now widely adopted by major AI developers and increasingly expected by regulators. They are the practical bridge between the reporting frameworks above and the registration requirements below — and the single most useful document a clinician can request before adopting any AI tool.</p>
+
+      <div class="mc-grid">
+        <div class="mc-card">
+          <div class="mc-num">1</div>
+          <div class="mc-card-title">Model details</div>
+          <div class="mc-card-body">Name, version, architecture, developer, and release date. Establishes what exactly you are adopting — important for audit trails and incident reporting.</div>
+        </div>
+        <div class="mc-card">
+          <div class="mc-num">2</div>
+          <div class="mc-card-title">Intended use — and out-of-scope use</div>
+          <div class="mc-card-body">Explicitly states what the model is designed for and, critically, what it is <em>not</em> designed for — e.g. "not validated for paediatric patients." Out-of-scope statements are as important as intended use.</div>
+        </div>
+        <div class="mc-card">
+          <div class="mc-num">3</div>
+          <div class="mc-card-title">Training data</div>
+          <div class="mc-card-body">Source institutions, patient demographics, dataset size, and curation methodology. Directly answers: who was in the training data, and how similar are they to your patients?</div>
+        </div>
+        <div class="mc-card">
+          <div class="mc-num">4</div>
+          <div class="mc-card-title">Evaluation data &amp; subgroup performance</div>
+          <div class="mc-card-body">The test set used and disaggregated metrics across age, sex, ethnicity, and comorbidities. A headline AUC of 0.91 may conceal an AUC of 0.74 in patients with CKD — subgroup data is where generalisation gaps become visible.</div>
+        </div>
+        <div class="mc-card">
+          <div class="mc-num">5</div>
+          <div class="mc-card-title">Known limitations &amp; failure modes</div>
+          <div class="mc-card-body">Documented edge cases where the model underperforms or should not be used. A credible model card names these explicitly — vague or absent limitations sections are a warning sign.</div>
+        </div>
+        <div class="mc-card">
+          <div class="mc-num">6</div>
+          <div class="mc-card-title">Ethical considerations &amp; fairness analysis</div>
+          <div class="mc-card-body">Assessment of potential harms and disparate impact across patient groups. Increasingly required by regulatory bodies and institutional AI governance frameworks globally.</div>
+        </div>
+      </div>
+
+      <div class="mc-footer">
+        <div class="mc-footer-title">Ask before you adopt</div>
+        When evaluating any AI tool from a vendor, ask for the model card. It should answer exactly what the metrics and validation sections above demand — was the training data demographically similar to your patients? What is the documented performance in clinically important subgroups? What are the stated out-of-scope uses? <strong>If no model card exists, treat that as a red flag.</strong> Regulators are moving in this direction too: the FDA increasingly expects model card-equivalent documentation in AI/ML submissions, the EU AI Act (Annex IV) requires similar technical disclosures, and the MMC Guideline's requirement that clinicians "evaluate recommendations based on professional clinical insight" implicitly demands exactly this kind of structured transparency.
+      </div>
+    </div>
 
     <h3 class="blk">Registration — what is and isn't regulated</h3>
     <div class="card">
@@ -1030,6 +1284,7 @@ const terms = [
   {id:'t52',name:'AI/ML Stack',sess:'s4',color:'#534AB7',def:'A hierarchically-integrated architecture for AI/ML software systems. Layers from data input management at the lower level, progressing to model selection, error estimation, decision support delivery, and end-user interfacing. Includes embedding and integration with healthcare systems and full model lifecycle support.',ex:'The full stack for a clinical documentation AI: EMR integration layer → NLP model layer → post-processing → clinician dashboard → monitoring and logging.'},
   {id:'t53',name:'AI/ML Pipelines and Platforms',sess:'s4',color:'#534AB7',def:'Pipelines are sets of tools and processes carrying out tasks step-by-step: data preparation, algorithm selection, model training, prediction. Platforms provide a complete environment for building, testing, and maintaining AI/ML models.',ex:'A data pipeline that automatically ingests new patient records, preprocesses them, runs them through the trained model, and outputs risk scores to a clinical dashboard.'},
   {id:'t54',name:'Sandboxing',sess:'s3',color:'#BA7517',def:'Safe pre-deployment testing of an AI/ML tool in real-life settings without directly or indirectly affecting critical care decisions. Ensures integration aspects (data access) and validates prospective performance and risk management.',ex:'Running a sepsis prediction model in "shadow mode" alongside clinical care for 3 months — it generates predictions, but clinicians do not act on them, allowing performance assessment without risk.'},
+  {id:'t66',name:'Model card',sess:'s3',color:'#BA7517',def:'A standardised short document that accompanies an AI model, transparently describing what it does, how it was trained, where it may fail, and its known limitations. First proposed by Mitchell et al. (Google, 2019). A model card typically covers model details, intended and out-of-scope uses, training and evaluation data, disaggregated performance by subgroup, known failure modes, and ethical considerations.',ex:'Before deploying a sepsis prediction tool, a clinician requests the model card and discovers the model was trained exclusively on US academic centre data, with documented AUC of 0.91 overall but 0.74 in patients with CKD — a critical finding for an ICU population with high rates of renal impairment.'},
   {id:'t55',name:'Prompt',sess:'s1',color:'#185FA5',def:'The input or question you give to an AI model to get a response.',ex:'"Summarise the key clinical priorities for this patient with heart failure and CKD" is a prompt.'},
   {id:'t56',name:'Prompt engineering',sess:'s1',color:'#185FA5',def:'The practice of designing input text (prompts) to guide an AI model to produce the desired response. A critical clinical skill for getting reliable, useful outputs from general-purpose LLMs.',ex:'"You are an experienced family physician. Summarise the following patient history in 3 bullet points, highlighting the most urgent clinical issues." — more specific prompts produce better outputs.'},
   {id:'t57',name:'Chain-of-thought prompting',sess:'s1',color:'#185FA5',def:'A technique where the model is prompted to explain its reasoning step by step before giving an answer. Improves performance on complex clinical reasoning tasks.',ex:'"Think through this case step by step before giving your differential diagnosis" — the model\'s intermediate reasoning can often be audited for clinical coherence.'},
@@ -1118,6 +1373,14 @@ function toggleStep(btn,id){
     btn.classList.add('active');
     detail.scrollIntoView({behavior:'smooth',block:'nearest'});
   }
+}
+
+/* ── EXPANDABLE METRIC PANELS ─────────────── */
+function toggleMexp(head,id){
+  const body=document.getElementById(id);
+  const isOpen=body.classList.contains('open');
+  head.classList.toggle('open',!isOpen);
+  body.classList.toggle('open',!isOpen);
 }
 
 /* ── PROGRESS BAR ─────────────────────────── */
